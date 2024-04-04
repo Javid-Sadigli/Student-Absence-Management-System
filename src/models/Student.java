@@ -1,6 +1,7 @@
 package models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import java.lang.ArrayIndexOutOfBoundsException;
@@ -80,13 +81,16 @@ public class Student implements Serializable
         FileDatabase<Student> db = new FileDatabase<Student>("./database/Student");
         db.load();
         Collection<Student> studentCollection = db.getAll(); 
-        studentCollection.forEach((student) -> {
-            if(student.getGroupId() != groupId)
+        ArrayList<Student> filteredStudentList = new ArrayList<Student>();
+        
+        for(Student student : studentCollection)
+        {
+            if(student.getGroupId() == groupId)
             {
-                studentCollection.remove(student);
+                filteredStudentList.add(student);
             }
-        });
-        return studentCollection.toArray(new Student[studentCollection.size()]);
+        }
+        return filteredStudentList.toArray(new Student[filteredStudentList.size()]);
     }
 
 }
