@@ -81,7 +81,7 @@ public class Student implements Serializable
         FileDatabase<Student> db = new FileDatabase<Student>("./database/Student");
         db.load();
         Collection<Student> studentCollection = db.getAll(); 
-        ArrayList<Student> filteredStudentList = new ArrayList<Student>();
+        Collection<Student> filteredStudentList = new ArrayList<Student>();
         
         for(Student student : studentCollection)
         {
