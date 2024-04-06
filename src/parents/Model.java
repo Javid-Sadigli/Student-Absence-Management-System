@@ -6,7 +6,8 @@ import toolkit.FileDatabase;
 
 public abstract class Model implements Serializable
 { 
-    protected String modelName; 
+    protected static String modelName;
+    protected static String databasePath; 
     public void save()
     {
         FileDatabase<Model> db = new FileDatabase<Model>(this.getDatabasePath());
@@ -27,6 +28,5 @@ public abstract class Model implements Serializable
     }; 
     
 
-    protected abstract void setModelName(); 
 
 }

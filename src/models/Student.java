@@ -15,6 +15,9 @@ public class Student extends Model
     private int id; 
     private int groupId; 
 
+    protected static String modelName = "Student";
+    protected static String databasePath = "./database"+ Student.modelName; 
+
     public Student(String fullName, int groupId)
     {
         this.fullName = fullName;
@@ -59,6 +62,16 @@ public class Student extends Model
         this.groupId = groupId;
     }
 
+
+    public void save()
+    {
+        FileDatabase<Student> db = new FileDatabase<Student>(this.getDatabasePath());
+        db.load();
+        db.add(this);
+        db.save();
+    }
+
+
     /* Static methods */
     public static Student[] getAll()
     {
@@ -84,14 +97,6 @@ public class Student extends Model
         return filteredStudentList.toArray(new Student[filteredStudentList.size()]);
     }
 
-    public String getDatabasePath()
-    {
-        return "./database/" + this.getModelName();
-    }
-
-    protected void setModelName()
-    {
-        this.modelName = "Student";
-    }
+   
 
 }
