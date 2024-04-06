@@ -1,14 +1,15 @@
 package models;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+
+import parents.Model;
 
 import java.lang.ArrayIndexOutOfBoundsException;
 
 import toolkit.FileDatabase;
 
-public class Student implements Serializable 
+public class Student extends Model
 {
     private String fullName;
     private int id; 
@@ -34,7 +35,6 @@ public class Student implements Serializable
         }
     }
 
-
     /* Getters */
     public String getFullName()
     {
@@ -59,15 +59,6 @@ public class Student implements Serializable
         this.groupId = groupId;
     }
 
-    public void save()
-    {
-        FileDatabase<Student> db = new FileDatabase<Student>("./database/Student");
-        db.load();
-        db.add(this);
-        db.save();
-    }
-
-
     /* Static methods */
     public static Student[] getAll()
     {
@@ -91,6 +82,16 @@ public class Student implements Serializable
             }
         }
         return filteredStudentList.toArray(new Student[filteredStudentList.size()]);
+    }
+
+    public String getDatabasePath()
+    {
+        return "./database/" + this.getModelName();
+    }
+
+    protected void setModelName()
+    {
+        this.modelName = "Student";
     }
 
 }
