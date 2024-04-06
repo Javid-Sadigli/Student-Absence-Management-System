@@ -3,39 +3,26 @@ package models;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import parents.Model;
+import interfaces.Model;
 
 import java.lang.ArrayIndexOutOfBoundsException;
 
 import toolkit.FileDatabase;
 
-public class Student extends Model
+public class Student implements Model
 {
     private String fullName;
     private int id; 
     private int groupId; 
 
-    protected static String modelName = "Student";
-    protected static String databasePath = "./database"+ Student.modelName; 
+    private static String modelName = "Student";
+    private static String databasePath = "./database"+ Student.modelName; 
 
     public Student(String fullName, int groupId)
     {
         this.fullName = fullName;
         this.groupId = groupId;
-
-        Student[] students = Student.getAll();
-
-        try
-        {
-            this.id = students[students.length - 1].getId() + 1;
-        }
-        catch (ArrayIndexOutOfBoundsException e)
-        {
-            if(e.getMessage().equals("Index -1 out of bounds for length 0"))
-            {
-                this.id = 1; 
-            }
-        }
+        this.setId();        
     }
 
     /* Getters */
@@ -61,11 +48,25 @@ public class Student extends Model
     {
         this.groupId = groupId;
     }
-
+    private void setId()
+    {
+        Student[] students = Student.getAll();
+        try
+        {
+            this.id = students[students.length - 1].getId() + 1;
+        }
+        catch (ArrayIndexOutOfBoundsException e)
+        {
+            if(e.getMessage().equals("Index -1 out of bounds for length 0"))
+            {
+                this.id = 1; 
+            }
+        }
+    }
 
     public void save()
     {
-        FileDatabase<Student> db = new FileDatabase<Student>(this.getDatabasePath());
+        FileDatabase<Student> db = new FileDatabase<Student>(Student.databasePath);
         db.load();
         db.add(this);
         db.save();
@@ -75,14 +76,14 @@ public class Student extends Model
     /* Static methods */
     public static Student[] getAll()
     {
-        FileDatabase<Student> db = new FileDatabase<Student>("./database/Student");
+        FileDatabase<Student> db = new FileDatabase<Student>(Student.databasePath);
         db.load();
         Collection<Student> studentCollection = db.getAll(); 
         return studentCollection.toArray(new Student[studentCollection.size()]);
     }
     public static Student[] filterByGroup(int groupId)
     {
-        FileDatabase<Student> db = new FileDatabase<Student>("./database/Student");
+        FileDatabase<Student> db = new FileDatabase<Student>(Student.databasePath);
         db.load();
         Collection<Student> studentCollection = db.getAll(); 
         Collection<Student> filteredStudentList = new ArrayList<Student>();
@@ -95,6 +96,20 @@ public class Student extends Model
             }
         }
         return filteredStudentList.toArray(new Student[filteredStudentList.size()]);
+    }
+    public Student findById(int id)
+    {
+        FileDatabase<Student> db = new FileDatabase<Student>(Student.databasePath);
+        db.load();
+        Collection<Student> studentCollection = db.getAll(); 
+        for(Student student : studentCollection)
+        {
+            if(student.getId() == id)
+            {
+                return student; 
+            }
+        }
+        return null; 
     }
 
    
