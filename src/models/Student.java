@@ -16,7 +16,7 @@ public class Student implements Model
     private int groupId; 
 
     private static String modelName = "Student";
-    private static String databasePath = "./database"+ Student.modelName; 
+    private static String databasePath = "./database/"+ Student.modelName; 
 
     public Student(String fullName, int groupId)
     {
@@ -34,9 +34,9 @@ public class Student implements Model
     {
         return this.id;
     }
-    public int getGroupId()
+    public Group getGroup()
     {
-        return this.groupId;
+        return Group.findById(this.groupId);
     }
 
     /* Setters */
@@ -90,14 +90,14 @@ public class Student implements Model
         
         for(Student student : studentCollection)
         {
-            if(student.getGroupId() == groupId)
+            if(student.getGroup().getId() == groupId)
             {
                 filteredStudentList.add(student);
             }
         }
         return filteredStudentList.toArray(new Student[filteredStudentList.size()]);
     }
-    public Student findById(int id)
+    public static Student findById(int id)
     {
         FileDatabase<Student> db = new FileDatabase<Student>(Student.databasePath);
         db.load();
