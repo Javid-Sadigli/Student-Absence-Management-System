@@ -1,2 +1,5 @@
 *.class
 /plan
+/src/GUI/.idea/
+/src/GUI/GUI.iml
+/src/databaseStudent.fdb
