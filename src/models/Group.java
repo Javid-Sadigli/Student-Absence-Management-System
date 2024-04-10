@@ -12,11 +12,12 @@ public class Group implements Model
     private int id;
 
     private static String modelName = "Group";
-    private static String databasePath = "./database"+ Group.modelName; 
+    private static String databasePath = "./database/"+ Group.modelName; 
 
     public Group(String name)
     {
         this.name = name;
+        this.setId();
     }
 
     /* Getters */
@@ -33,6 +34,21 @@ public class Group implements Model
     public void setName(String name)
     {
         this.name = name;
+    }
+    private void setId()
+    {
+        Group[] groups = Group.getAll();
+        try
+        {
+            this.id = groups[groups.length - 1].getId() + 1;
+        }
+        catch (ArrayIndexOutOfBoundsException e)
+        {
+            if(e.getMessage().equals("Index -1 out of bounds for length 0"))
+            {
+                this.id = 1; 
+            }
+        }
     }
 
 
@@ -58,7 +74,20 @@ public class Group implements Model
         Collection<Group> groupCollection = db.getAll(); 
         return groupCollection.toArray(new Group[groupCollection.size()]);
     }
-
+    public static Group findById(int id)
+    {
+        FileDatabase<Group> db = new FileDatabase<Group>(Group.databasePath);
+        db.load();
+        Collection<Group> groupCollection = db.getAll(); 
+        for(Group group : groupCollection)
+        {
+            if(group.getId() == id)
+            {
+                return group; 
+            }
+        }
+        return null; 
+    }
     
 
 
