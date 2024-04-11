@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -10,20 +11,17 @@ public class Lesson implements Model
 {
     private int id; 
     private Date date; 
-    private int groupId;
     private int subjectId; 
     private int room; 
 
     private static String modelName = "Lesson";
     private static String databasePath = "./database/"+ Lesson.modelName; 
 
-    public Lesson(Date date, int groupId, int subjectId, int room)
+    public Lesson(Date date, int subjectId, int room)
     {
         this.room = room;
         this.date = date;
-        this.groupId = groupId;
         this.subjectId = subjectId;
-        this.setId();
     }
 
     /* Getters */
@@ -35,23 +33,19 @@ public class Lesson implements Model
     {
         return this.date;
     }
-    public Group getGroup()
+    public Subject getSubject()
     {
-        return Group.findById(this.groupId);
+        return Subject.findById(this.subjectId);
     }
-    // public Subject getSubject()
-    // {
-        
-    // }
+    public int getRoom()
+    {
+        return this.room;
+    }
 
     /* Setters */
     public void setDate(Date date)
     {
         this.date = date;
-    }
-    public void setGroupId(int groupId)
-    {
-        this.groupId = groupId;
     }
     public void setRoom(int room)
     {
@@ -80,13 +74,12 @@ public class Lesson implements Model
     
     public void save()
     {
+        this.setId();
         FileDatabase<Lesson> db = new FileDatabase<Lesson>(Lesson.databasePath);
         db.load();
         db.add(this);
         db.save();
     }
-
-    
 
     /* Static methods */
     public static Lesson[] getAll()
@@ -96,6 +89,52 @@ public class Lesson implements Model
         Collection<Lesson> lessonCollection = db.getAll(); 
         return lessonCollection.toArray(new Lesson[lessonCollection.size()]);
     }
+    public static Lesson findById(int id)
+    {
+        FileDatabase<Lesson> db = new FileDatabase<Lesson>(Lesson.databasePath);
+        db.load();
+        Collection<Lesson> lessonCollection = db.getAll(); 
+        for(Lesson lesson : lessonCollection)
+        {
+            if(lesson.getId() == id)
+            {
+                return lesson; 
+            }
+        }
+        return null; 
+    }
+    public static Lesson[] filterBySubject(int subjectId)
+    {
+        FileDatabase<Lesson> db = new FileDatabase<Lesson>(Lesson.databasePath);
+        db.load();
+        Collection<Lesson> lessonCollection = db.getAll(); 
+        Collection<Lesson> filteredLessonList = new ArrayList<Lesson>();
+        
+        for(Lesson lesson : lessonCollection)
+        {
+            if(lesson.getSubject().getId() == subjectId)
+            {
+                filteredLessonList.add(lesson);
+            }
+        }
+        return filteredLessonList.toArray(new Lesson[filteredLessonList.size()]);
+    }
 
+    public static Lesson[] filterByRoom(int room)
+    {
+        FileDatabase<Lesson> db = new FileDatabase<Lesson>(Lesson.databasePath);
+        db.load();
+        Collection<Lesson> lessonCollection = db.getAll(); 
+        Collection<Lesson> filteredLessonList = new ArrayList<Lesson>();
+        
+        for(Lesson lesson : lessonCollection)
+        {
+            if(lesson.getRoom() == room)
+            {
+                filteredLessonList.add(lesson);
+            }
+        }
+        return filteredLessonList.toArray(new Lesson[filteredLessonList.size()]);
+    }
 
 }

@@ -22,7 +22,6 @@ public class Student implements Model
     {
         this.fullName = fullName;
         this.groupId = groupId;
-        this.setId();        
     }
 
     /* Getters */
@@ -37,6 +36,15 @@ public class Student implements Model
     public Group getGroup()
     {
         return Group.findById(this.groupId);
+    }
+
+    public Absent[] getAbsents()
+    {
+        return Absent.filterByStudent(this.id);
+    }
+    public Absent[] getAbsentsForSubject(int subjectId)
+    {
+        return Absent.filterByStudentAndSubject(this.id, subjectId);
     }
 
     /* Setters */
@@ -66,6 +74,7 @@ public class Student implements Model
 
     public void save()
     {
+        this.setId();        
         FileDatabase<Student> db = new FileDatabase<Student>(Student.databasePath);
         db.load();
         db.add(this);
@@ -111,7 +120,4 @@ public class Student implements Model
         }
         return null; 
     }
-
-   
-
 }

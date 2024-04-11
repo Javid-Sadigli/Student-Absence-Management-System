@@ -17,7 +17,6 @@ public class Group implements Model
     public Group(String name)
     {
         this.name = name;
-        this.setId();
     }
 
     /* Getters */
@@ -54,6 +53,7 @@ public class Group implements Model
 
     public void save()
     {
+        this.setId();
         FileDatabase<Group> db = new FileDatabase<Group>(Group.databasePath);
         db.load();
         db.add(this);
