@@ -1,13 +1,24 @@
 package GUI;
 
+import models.Lesson;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.MonthDay;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 
 public class AddLessonPanel extends JPanel{
 
     private String panelTitle;
+    private String lessonName;
+    private String lessonTopic;
+    private int dateMonth;
+    private int dateDay;
+
     public AddLessonPanel(){
 
         this.setLayout(new GridBagLayout());
@@ -68,10 +79,67 @@ public class AddLessonPanel extends JPanel{
         this.add(submitButton, gbc);
 
         //CONTROLLERS
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Get the values from the text fields and combo boxes
+                String name = lessonName.getText();
+                String topic = lessonTopic.getText();
+                int monthIndex = monthComboBox.getSelectedIndex(); // 0-based index of the selected month
+                int day = (Integer) daysComboBox.getSelectedItem(); // Selected day
 
+                // Set the values to corresponding variables
+                setLessonName(name);
+                setLessonTopic(topic);
+                setDateMonth(monthIndex + 1); // Convert 0-based index to 1-based month
+                setDateDay(day);
+
+                // Debugging: Print the values to console
+                System.out.println("Lesson Name: " + getLessonName());
+                System.out.println("Lesson Topic: " + getLessonTopic());
+                System.out.println("Date Month: " + getDateMonth());
+                System.out.println("Date Day: " + getDateDay());
+            }
+        });
+
+
+
+    }
+
+    public void setDateDay(int dateDay) {
+        this.dateDay = dateDay;
+    }
+
+    public void setDateMonth(int dateMonth) {
+        this.dateMonth = dateMonth;
+    }
+
+    public void setLessonName(String lessonName) {
+        this.lessonName = lessonName;
+    }
+
+    public void setLessonTopic(String lessonTopic) {
+        this.lessonTopic = lessonTopic;
     }
 
     public String getPanelTitle() {
         return panelTitle;
     }
+
+    public int getDateDay() {
+        return dateDay;
+    }
+
+    public int getDateMonth() {
+        return dateMonth;
+    }
+
+    public String getLessonName() {
+        return lessonName;
+    }
+
+    public String getLessonTopic() {
+        return lessonTopic;
+    }
+
 }

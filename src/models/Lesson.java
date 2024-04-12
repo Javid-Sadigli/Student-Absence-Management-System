@@ -22,7 +22,6 @@ public class Lesson implements Model
         this.room = room;
         this.date = date;
         this.subjectId = subjectId;
-        this.id = 0;
     }
 
     /* Getters */

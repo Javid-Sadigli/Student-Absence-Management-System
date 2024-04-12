@@ -19,7 +19,6 @@ public class Subject implements Model
     {
         this.name = name;
         this.groupId = groupId;
-        this.id = 0;
     }
 
     /* Getters */
