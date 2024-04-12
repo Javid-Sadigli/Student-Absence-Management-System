@@ -12,12 +12,11 @@ public class Group implements Model
     private int id;
 
     private static String modelName = "Group";
-    private static String databasePath = "./database/"+ Group.modelName; 
+    private static String databasePath = "src/database/"+ Group.modelName;
 
     public Group(String name)
     {
         this.name = name;
-        this.id = 0;
     }
 
     /* Getters */

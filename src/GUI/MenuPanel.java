@@ -1,7 +1,6 @@
 package GUI;
 
 import javax.swing.*;
-import javax.swing.text.StyledEditorKit;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +12,7 @@ import java.util.List;
 
 public class MenuPanel extends JPanel {
     private String panelTitle;
+
     public MenuPanel() {
         // GridBagLayout for MenuPanel
         this.setLayout(new GridBagLayout());
@@ -23,12 +23,16 @@ public class MenuPanel extends JPanel {
         JButton addStudentButton = new JButton("Add Student");
         JButton addLessonButton = new JButton("Add Lesson");
         JButton checkPresenceButton = new JButton("Check Presence");
+        JButton addSubjectButton = new JButton("Add Subject"); // New button for Add Subject
+        JButton addGroupButton = new JButton("Add Group"); // New button for Add Group
 
         // make buttons larger
         Dimension buttonSize = new Dimension(300, 50);
         addStudentButton.setPreferredSize(buttonSize);
         addLessonButton.setPreferredSize(buttonSize);
         checkPresenceButton.setPreferredSize(buttonSize);
+        addSubjectButton.setPreferredSize(buttonSize); // Set size for new buttons
+        addGroupButton.setPreferredSize(buttonSize);
 
         // GridBagConstraints for button positioning
         GridBagConstraints gbc = new GridBagConstraints();
@@ -45,6 +49,11 @@ public class MenuPanel extends JPanel {
         gbc.gridy++;
         this.add(checkPresenceButton, gbc);
 
+        gbc.gridy++;
+        this.add(addSubjectButton, gbc); // Add the new button to the panel
+
+        gbc.gridy++;
+        this.add(addGroupButton, gbc); // Add the new button to the panel
 
         // Create a JLabel with custom styling to resemble an underlined reference
         JLabel referenceLabel = new JLabel("<html><u>I am a Student</u></html>");
@@ -77,16 +86,34 @@ public class MenuPanel extends JPanel {
         checkPresenceButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CheckPresence checkPresence= new CheckPresence(readLessonNamesFromFile("src/Lessons"));
+                CheckPresence checkPresence= new CheckPresence(readLessonNamesFromFile("src/GUI/Lessons"));
                 MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
                 mainFrame.setCurrentPanel(checkPresence);
+            }
+        });
+
+        addSubjectButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddSubjectPanel addSubjectPanel = new AddSubjectPanel(); // Create an instance of AddSubjectPanel
+                MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
+                mainFrame.setCurrentPanel(addSubjectPanel); // Set the current panel to AddSubjectPanel
+            }
+        });
+
+        addGroupButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddGroupPanel addGroupPanel = new AddGroupPanel(); // Create an instance of AddGroupPanel
+                MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
+                mainFrame.setCurrentPanel(addGroupPanel); // Set the current panel to AddGroupPanel
             }
         });
 
     }
 
     //data retrieving for Check Presence Button
-    private java.util.List<String> readLessonNamesFromFile(String filePath) {
+    private List<String> readLessonNamesFromFile(String filePath) {
         List<String> lessons = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
@@ -98,8 +125,6 @@ public class MenuPanel extends JPanel {
         }
         return lessons;
     }
-
-
 
     public String getPanelTitle() {
         return panelTitle;
