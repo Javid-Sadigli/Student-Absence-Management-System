@@ -4,3 +4,4 @@
 *.iml
 /src/databaseStudent.fdb
 /.idea
+/out
