@@ -1,5 +1,15 @@
+package GUI;
+
 import javax.swing.*;
+import javax.swing.text.StyledEditorKit;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MenuPanel extends JPanel {
     private String panelTitle;
@@ -27,29 +37,69 @@ public class MenuPanel extends JPanel {
         gbc.insets = new Insets(10, 10, 10, 10); // add some padding
 
         // adding buttons to the panel with GridBagConstraints
-        add(addStudentButton, gbc);
+        this.add(addStudentButton, gbc);
 
         gbc.gridy++;
-        add(addLessonButton, gbc);
+        this.add(addLessonButton, gbc);
 
         gbc.gridy++;
-        add(checkPresenceButton, gbc);
+        this.add(checkPresenceButton, gbc);
 
 
         // Create a JLabel with custom styling to resemble an underlined reference
-        JLabel referenceLabel = new JLabel("<html><u>Leave a Note</u></html>");
+        JLabel referenceLabel = new JLabel("<html><u>I am a Student</u></html>");
         referenceLabel.setForeground(Color.BLUE);
         referenceLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
 
         gbc.gridy++;
         add(referenceLabel, gbc);
 
+        //CONTROLLERS
+        addStudentButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddStudentPanel addStudentPanel = new AddStudentPanel();
+                MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
+                mainFrame.setCurrentPanel(addStudentPanel);
+            }
+        });
+
+        addLessonButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddLessonPanel addLessonPanel = new AddLessonPanel();
+                MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
+                mainFrame.setCurrentPanel(addLessonPanel);
+            }
+        });
+
+        checkPresenceButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CheckPresence checkPresence= new CheckPresence(readLessonNamesFromFile("src/Lessons"));
+                MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
+                mainFrame.setCurrentPanel(checkPresence);
+            }
+        });
+
     }
 
-//
-//    public void setPanelTitle(String panelTitle) {
-//        this.panelTitle = panelTitle;
-//    }
+    //data retrieving for Check Presence Button
+    private java.util.List<String> readLessonNamesFromFile(String filePath) {
+        List<String> lessons = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                lessons.add(line.trim()); // Add lesson name to the list
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lessons;
+    }
+
+
 
     public String getPanelTitle() {
         return panelTitle;

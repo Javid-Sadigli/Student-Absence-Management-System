@@ -1,3 +1,5 @@
+package GUI;
+
 import javax.swing.*;
 import java.awt.*;
 import java.time.MonthDay;
@@ -64,6 +66,8 @@ public class AddLessonPanel extends JPanel{
         gbc.gridwidth = 2;
         JButton submitButton = new JButton("Submit");
         this.add(submitButton, gbc);
+
+        //CONTROLLERS
 
     }
 

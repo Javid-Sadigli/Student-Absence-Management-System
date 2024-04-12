@@ -1,3 +1,5 @@
+package GUI;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -55,6 +57,9 @@ public class AddStudentPanel extends JPanel {
         gbc.gridwidth = 2;
         JButton submitButton = new JButton("Submit");
         this.add(submitButton, gbc);
+
+        //CONTROLLERS
+
 
     }
 
