@@ -22,6 +22,7 @@ public class Student implements Model
     {
         this.fullName = fullName;
         this.groupId = groupId;
+        this.id = 0;
     }
 
     /* Getters */

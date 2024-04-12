@@ -17,6 +17,7 @@ public class Group implements Model
     public Group(String name)
     {
         this.name = name;
+        this.id = 0;
     }
 
     /* Getters */

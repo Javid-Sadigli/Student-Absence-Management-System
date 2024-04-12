@@ -13,7 +13,14 @@ public class Absent implements Model
     private int lessonId; 
 
     private static String modelName = "Absent";
-    private static String databasePath = "./database/"+ Absent.modelName; 
+    private static String databasePath = "./database/"+ Absent.modelName;
+    
+    public Absent(int studentId, int lessonId)
+    {
+        this.studentId = studentId;
+        this.lessonId = lessonId;
+        this.id = 0;
+    }
 
 
     /* Getters */
