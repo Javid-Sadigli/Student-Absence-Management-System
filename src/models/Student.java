@@ -7,6 +7,7 @@ import interfaces.Model;
 
 import java.lang.ArrayIndexOutOfBoundsException;
 
+import toolkit.DatabasePath;
 import toolkit.FileDatabase;
 
 public class Student implements Model
@@ -16,7 +17,7 @@ public class Student implements Model
     private int groupId; 
 
     private static String modelName = "Student";
-    private static String databasePath = "./database/"+ Student.modelName; 
+    private static String databasePath = DatabasePath.getDatabasePath(modelName + ".fdb");
 
     public Student(String fullName, int groupId)
     {

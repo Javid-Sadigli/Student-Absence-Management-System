@@ -3,7 +3,7 @@ package models;
 import java.util.Collection;
 
 import interfaces.Model;
-
+import toolkit.DatabasePath;
 import toolkit.FileDatabase;
 
 public class Group implements Model
@@ -12,7 +12,7 @@ public class Group implements Model
     private int id;
 
     private static String modelName = "Group";
-    private static String databasePath = "src/database/"+ Group.modelName;
+    private static String databasePath = DatabasePath.getDatabasePath(modelName + ".fdb");
 
     public Group(String name)
     {

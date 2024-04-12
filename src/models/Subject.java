@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import interfaces.Model;
+import toolkit.DatabasePath;
 import toolkit.FileDatabase;
 
 public class Subject implements Model
@@ -13,7 +14,7 @@ public class Subject implements Model
     private int groupId;
 
     private static String modelName = "Subject";
-    private static String databasePath = "./database/"+ Subject.modelName; 
+    private static String databasePath = DatabasePath.getDatabasePath(modelName + ".fdb");
 
     public Subject(String name, int groupId)
     {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import interfaces.Model;
+import toolkit.DatabasePath;
 import toolkit.FileDatabase;
 
 public class Absent implements Model
@@ -13,7 +14,7 @@ public class Absent implements Model
     private int lessonId; 
 
     private static String modelName = "Absent";
-    private static String databasePath = "./database/"+ Absent.modelName; 
+    private static String databasePath = DatabasePath.getDatabasePath(modelName + ".fdb");
 
 
     /* Getters */

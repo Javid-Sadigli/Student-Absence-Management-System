@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import interfaces.Model;
+import toolkit.DatabasePath;
 import toolkit.FileDatabase;
 
 public class Lesson implements Model
@@ -15,7 +16,7 @@ public class Lesson implements Model
     private int room; 
 
     private static String modelName = "Lesson";
-    private static String databasePath = "./database/"+ Lesson.modelName; 
+    private static String databasePath = DatabasePath.getDatabasePath(modelName + ".fdb");
 
     public Lesson(Date date, int subjectId, int room)
     {
