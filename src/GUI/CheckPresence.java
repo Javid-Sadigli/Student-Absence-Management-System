@@ -22,7 +22,7 @@ public class CheckPresence extends JPanel {
         if (lessons != null && !lessons.isEmpty()) {
             for (Lesson lesson : lessons) {
                 //lesson details
-                listModel.addElement("Subject: " + lesson.getSubject());
+                listModel.addElement("Subject: " + lesson.getSubject().getName());
 //                listModel.addElement("Date: " + lesson.getDate());
 //                listModel.addElement("Room: " + lesson.getRoom());
 //                listModel.addElement("ID: " + lesson.getId());
