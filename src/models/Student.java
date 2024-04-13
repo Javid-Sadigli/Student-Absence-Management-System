@@ -73,16 +73,6 @@ public class Student implements Model
         }
     }
 
-    public void save()
-    {
-        this.setId();        
-        FileDatabase<Student> db = new FileDatabase<Student>(Student.databasePath);
-        db.load();
-        db.add(this);
-        db.save();
-    }
-
-
     /* Static methods */
     public static Student[] getAll()
     {
@@ -120,5 +110,33 @@ public class Student implements Model
             }
         }
         return null; 
+    }
+    
+
+    @Override
+    public boolean equals(Object obj) 
+    {
+        Student student = (Student) obj;
+        if (student.getId() == this.getId()) return true; 
+        return false;
+    }
+
+    @Override
+    public void save()
+    {
+        this.setId();        
+        FileDatabase<Student> db = new FileDatabase<Student>(Student.databasePath);
+        db.load();
+        db.add(this);
+        db.save();
+    }
+
+    @Override 
+    public void destroy()
+    {
+        FileDatabase<Student> db = new FileDatabase<Student>(Student.databasePath);
+        db.load();
+        db.remove(this);
+        db.save();
     }
 }

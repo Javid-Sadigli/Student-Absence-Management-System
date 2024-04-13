@@ -51,15 +51,6 @@ public class Group implements Model
     }
 
 
-    public void save()
-    {
-        this.setId();
-        FileDatabase<Group> db = new FileDatabase<Group>(Group.databasePath);
-        db.load();
-        db.add(this);
-        db.save();
-    }
-
     public Student[] getStudents()
     {
         return Student.filterByGroup(this.id); 
@@ -87,6 +78,34 @@ public class Group implements Model
             }
         }
         return null; 
+    }
+
+
+    @Override
+    public void save()
+    {
+        this.setId();
+        FileDatabase<Group> db = new FileDatabase<Group>(Group.databasePath);
+        db.load();
+        db.add(this);
+        db.save();
+    }
+
+    @Override
+    public void destroy()
+    {
+        FileDatabase<Group> db = new FileDatabase<Group>(Group.databasePath);
+        db.load();
+        db.remove(this);
+        db.save();
+    }
+
+    @Override
+    public boolean equals(Object obj) 
+    {
+        Group group = (Group) obj;
+        if (group.getId() == this.getId()) return true; 
+        return false;
     }
     
 
