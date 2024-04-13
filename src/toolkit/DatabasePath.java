@@ -6,9 +6,7 @@ public class DatabasePath {
     public static String getDatabasePath(String modelName) {
         // Get the current directory of the project
         String currentDir = Paths.get("").toAbsolutePath().toString();
-
-        System.out.println("Current dir : "+ currentDir);
-        
+    
         if (currentDir.endsWith("src")) 
         {   
             return "./database/"+ modelName + ".fdb"; 

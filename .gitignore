@@ -1,8 +1,8 @@
+/out
 *.class
 /plan
 /src/GUI/.idea/
 *.iml
 /src/databaseStudent.fdb
 /.idea
-/out
 /src/TestForModelling.java

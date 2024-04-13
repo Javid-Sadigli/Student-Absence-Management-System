@@ -133,7 +133,7 @@ public class AddLessonPanel extends JPanel {
                 int subjectId = getSubjectIdByName(selectedSubject);
 
                 // Create a new Lesson object with the input values
-                Lesson lesson = new Lesson(date, room, subjectId);
+                Lesson lesson = new Lesson(date, subjectId, room);
 
                 // Save the Lesson object
                 lesson.save();
