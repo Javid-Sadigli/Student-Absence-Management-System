@@ -23,6 +23,7 @@ public class Lesson implements Model
         this.room = room;
         this.date = date;
         this.subjectId = subjectId;
+        this.id = 0;
     }
 
     /* Getters */
@@ -131,11 +132,19 @@ public class Lesson implements Model
     @Override
     public void save()
     {
-        this.setId();
         FileDatabase<Lesson> db = new FileDatabase<Lesson>(Lesson.databasePath);
         db.load();
-        db.add(this);
-        db.save();
+        if(this.id == 0)
+        {
+            this.setId();        
+            db.add(this);
+            db.save();
+        }
+        else 
+        {
+            db.replace(db.indexOf(this), this);
+            db.save();
+        }
     }
 
     @Override 

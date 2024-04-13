@@ -17,6 +17,7 @@ public class Group implements Model
     public Group(String name)
     {
         this.name = name;
+        this.id = 0;
     }
 
     /* Getters */
@@ -84,11 +85,19 @@ public class Group implements Model
     @Override
     public void save()
     {
-        this.setId();
         FileDatabase<Group> db = new FileDatabase<Group>(Group.databasePath);
         db.load();
-        db.add(this);
-        db.save();
+        if(this.id == 0)
+        {
+            this.setId();        
+            db.add(this);
+            db.save();
+        }
+        else 
+        {
+            db.replace(db.indexOf(this), this);
+            db.save();
+        }
     }
 
     @Override
