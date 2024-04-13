@@ -150,6 +150,7 @@ public class Absent implements Model
         db.save();
     }
 
+    @Override
     public boolean equals(Object obj) 
     {
         Absent absent = (Absent) obj;
