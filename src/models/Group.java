@@ -12,7 +12,7 @@ public class Group implements Model
     private int id;
 
     private static String modelName = "Group";
-    private static String databasePath = DatabasePath.getDatabasePath(modelName + ".fdb");
+    private static String databasePath = DatabasePath.getDatabasePath(modelName);
 
     public Group(String name)
     {

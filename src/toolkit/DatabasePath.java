@@ -1,21 +1,22 @@
 package toolkit;
 
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class DatabasePath {
-    public static String getDatabasePath(String databaseFileName) {
+    public static String getDatabasePath(String modelName) {
         // Get the current directory of the project
-        Path currentDir = Paths.get("").toAbsolutePath();
-        Path relativePath;
+        String currentDir = Paths.get("").toAbsolutePath().toString();
 
-        relativePath = Paths.get("database", databaseFileName);
-
-        // Combine the current directory with the relative path
-        Path databasePath = currentDir.resolve(relativePath);
-
-        // Return the absolute path as a string
-        return databasePath.toString();
+        System.out.println("Current dir : "+ currentDir);
+        
+        if (currentDir.endsWith("src")) 
+        {   
+            return "./database/"+ modelName + ".fdb"; 
+        }
+        else 
+        {
+            return "./src/database/"+ modelName + ".fdb";
+        }
     }
 }
 

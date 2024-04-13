@@ -14,7 +14,7 @@ public class Subject implements Model
     private int groupId;
 
     private static String modelName = "Subject";
-    private static String databasePath = DatabasePath.getDatabasePath(modelName + ".fdb");
+    private static String databasePath = DatabasePath.getDatabasePath(modelName);
 
     public Subject(String name, int groupId)
     {

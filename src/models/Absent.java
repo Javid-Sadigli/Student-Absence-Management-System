@@ -14,7 +14,7 @@ public class Absent implements Model
     private int lessonId; 
 
     private static String modelName = "Absent";
-    private static String databasePath = DatabasePath.getDatabasePath(modelName + ".fdb");
+    private static String databasePath = DatabasePath.getDatabasePath(modelName);
 
     public Absent(int studentId, int lessonId)
     {

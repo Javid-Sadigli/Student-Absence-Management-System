@@ -16,7 +16,8 @@ public class Lesson implements Model
     private int room; 
 
     private static String modelName = "Lesson";
-    private static String databasePath = DatabasePath.getDatabasePath(modelName + ".fdb");
+    private static String databasePath = DatabasePath.getDatabasePath(modelName);
+    // private static String databasePath = "src/database/" + modelName + ".fdb";
 
     public Lesson(Date date, int subjectId, int room)
     {

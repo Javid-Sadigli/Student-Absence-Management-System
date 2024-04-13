@@ -17,7 +17,7 @@ public class Student implements Model
     private int groupId; 
 
     private static String modelName = "Student";
-    private static String databasePath = DatabasePath.getDatabasePath(modelName + ".fdb");
+    private static String databasePath = DatabasePath.getDatabasePath(modelName);
 
     public Student(String fullName, int groupId)
     {
