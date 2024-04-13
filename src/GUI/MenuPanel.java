@@ -4,11 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import models.Lesson;
 
 public class MenuPanel extends JPanel {
     private String panelTitle;
@@ -55,14 +54,6 @@ public class MenuPanel extends JPanel {
         gbc.gridy++;
         this.add(addGroupButton, gbc); // Add the new button to the panel
 
-        // Create a JLabel with custom styling to resemble an underlined reference
-        JLabel referenceLabel = new JLabel("<html><u>I am a Student</u></html>");
-        referenceLabel.setForeground(Color.BLUE);
-        referenceLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-
-        gbc.gridy++;
-        add(referenceLabel, gbc);
 
         //CONTROLLERS
         addStudentButton.addActionListener(new ActionListener() {
@@ -86,7 +77,9 @@ public class MenuPanel extends JPanel {
         checkPresenceButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CheckPresence checkPresence= new CheckPresence(readLessonNamesFromFile("src/GUI/Lessons"));
+                Lesson[] lessons = Lesson.getAll();
+                List<Lesson> lessonList = Arrays.asList(lessons); // Convert array to list
+                CheckPresence checkPresence = new CheckPresence(lessonList);
                 MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
                 mainFrame.setCurrentPanel(checkPresence);
             }
@@ -110,20 +103,6 @@ public class MenuPanel extends JPanel {
             }
         });
 
-    }
-
-    //data retrieving for Check Presence Button
-    private List<String> readLessonNamesFromFile(String filePath) {
-        List<String> lessons = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                lessons.add(line.trim()); // Add lesson name to the list
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return lessons;
     }
 
     public String getPanelTitle() {

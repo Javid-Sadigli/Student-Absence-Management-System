@@ -43,11 +43,31 @@ public class AddSubjectPanel extends JPanel {
         groupComboBox = new JComboBox<>(groupNames.toArray(new String[0]));
         this.add(groupComboBox, gbc);
 
-        gbc.gridx = 0;
+        // Add a return button
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.gridx = 1;
         gbc.gridy++;
+        gbc.gridwidth = 1;
+        JButton returnButton = new JButton("Return to Menu");
+        this.add(returnButton, gbc);
+
+        gbc.gridx = 0;
+        gbc.anchor = GridBagConstraints.WEST;
         gbc.gridwidth = 2;
         JButton submitButton = new JButton("Submit");
         this.add(submitButton, gbc);
+
+        returnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Return to the menu panel
+                JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(AddSubjectPanel.this);
+                frame.getContentPane().removeAll();
+                frame.getContentPane().add(new MenuPanel());
+                frame.revalidate();
+                frame.repaint();
+            }
+        });
 
         submitButton.addActionListener(new ActionListener() {
             @Override

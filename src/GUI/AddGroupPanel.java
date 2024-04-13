@@ -29,15 +29,6 @@ public class AddGroupPanel extends JPanel {
         JTextField groupNameField = new JTextField(20);
         this.add(groupNameField, gbc);
 
-//        gbc.gridx = 0;
-//        gbc.gridy++;
-//        JLabel leaderLabel = new JLabel("Group Leader: ");
-//        this.add(leaderLabel, gbc);
-//
-//        gbc.gridx++;
-//        JTextField groupLeaderField = new JTextField(20);
-//        this.add(groupLeaderField, gbc);
-
         gbc.gridx = 0;
         gbc.gridy++;
         gbc.gridwidth = 2;
