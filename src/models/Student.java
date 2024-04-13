@@ -23,6 +23,7 @@ public class Student implements Model
     {
         this.fullName = fullName;
         this.groupId = groupId;
+        this.id = 0;
     }
 
     /* Getters */
@@ -124,11 +125,19 @@ public class Student implements Model
     @Override
     public void save()
     {
-        this.setId();        
         FileDatabase<Student> db = new FileDatabase<Student>(Student.databasePath);
         db.load();
-        db.add(this);
-        db.save();
+        if(this.id == 0)
+        {
+            this.setId();        
+            db.add(this);
+            db.save();
+        }
+        else 
+        {
+            db.replace(db.indexOf(this), this);
+            db.save();
+        }
     }
 
     @Override 

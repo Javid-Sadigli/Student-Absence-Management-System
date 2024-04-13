@@ -16,6 +16,13 @@ public class Absent implements Model
     private static String modelName = "Absent";
     private static String databasePath = DatabasePath.getDatabasePath(modelName + ".fdb");
 
+    public Absent(int studentId, int lessonId)
+    {
+        this.studentId = studentId;
+        this.lessonId = lessonId;
+        this.id = 0;
+    }
+
 
     /* Getters */
     public int getId()
@@ -134,11 +141,19 @@ public class Absent implements Model
     @Override
     public void save()
     {
-        this.setId();
         FileDatabase<Absent> db = new FileDatabase<Absent>(Absent.databasePath);
         db.load();
-        db.add(this);
-        db.save();
+        if(this.id == 0)
+        {
+            this.setId();        
+            db.add(this);
+            db.save();
+        }
+        else 
+        {
+            db.replace(db.indexOf(this), this);
+            db.save();
+        }
     }
 
     @Override
