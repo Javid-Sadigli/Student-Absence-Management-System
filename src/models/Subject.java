@@ -61,16 +61,6 @@ public class Subject implements Model
         this.groupId = groupId;
     }
 
-
-    public void save()
-    {
-        this.setId();
-        FileDatabase<Subject> db = new FileDatabase<Subject>(Subject.databasePath);
-        db.load();
-        db.add(this);
-        db.save();
-    }
-
     /* Static methods */
     public static Subject[] getAll()
     {
@@ -108,5 +98,32 @@ public class Subject implements Model
             }
         }
         return filteredSubjectList.toArray(new Subject[filteredSubjectList.size()]);
+    }
+
+    @Override 
+    public void save()
+    {
+        this.setId();
+        FileDatabase<Subject> db = new FileDatabase<Subject>(Subject.databasePath);
+        db.load();
+        db.add(this);
+        db.save();
+    }
+
+    @Override
+    public void destroy()
+    {
+        FileDatabase<Subject> db = new FileDatabase<Subject>(Subject.databasePath);
+        db.load();
+        db.remove(this);
+        db.save();
+    }
+
+    @Override 
+    public boolean equals(Object obj) 
+    {
+        Subject subject = (Subject) obj;
+        if (subject.getId() == this.getId()) return true; 
+        return false;
     }
 }

@@ -72,16 +72,6 @@ public class Lesson implements Model
         }
     }
 
-    
-    public void save()
-    {
-        this.setId();
-        FileDatabase<Lesson> db = new FileDatabase<Lesson>(Lesson.databasePath);
-        db.load();
-        db.add(this);
-        db.save();
-    }
-
     /* Static methods */
     public static Lesson[] getAll()
     {
@@ -136,6 +126,33 @@ public class Lesson implements Model
             }
         }
         return filteredLessonList.toArray(new Lesson[filteredLessonList.size()]);
+    }
+
+    @Override
+    public void save()
+    {
+        this.setId();
+        FileDatabase<Lesson> db = new FileDatabase<Lesson>(Lesson.databasePath);
+        db.load();
+        db.add(this);
+        db.save();
+    }
+
+    @Override 
+    public void destroy()
+    {
+        FileDatabase<Lesson> db = new FileDatabase<Lesson>(Lesson.databasePath);
+        db.load();
+        db.remove(this);
+        db.save();
+    }
+
+    @Override
+    public boolean equals(Object obj) 
+    {
+        Lesson lesson = (Lesson) obj;
+        if (lesson.getId() == this.getId()) return true; 
+        return false;
     }
 
 }

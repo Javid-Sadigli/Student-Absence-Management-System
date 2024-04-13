@@ -56,15 +56,6 @@ public class Absent implements Model
         this.lessonId = lessonId;
     }
 
-    public void save()
-    {
-        this.setId();
-        FileDatabase<Absent> db = new FileDatabase<Absent>(Absent.databasePath);
-        db.load();
-        db.add(this);
-        db.save();
-    }
-
     /* Static methods */
     public static Absent[] getAll()
     {
@@ -137,6 +128,33 @@ public class Absent implements Model
             }
         }
         return filteredAbsentList.toArray(new Absent[filteredAbsentList.size()]);
+    }
+
+
+    @Override
+    public void save()
+    {
+        this.setId();
+        FileDatabase<Absent> db = new FileDatabase<Absent>(Absent.databasePath);
+        db.load();
+        db.add(this);
+        db.save();
+    }
+
+    @Override
+    public void destroy()
+    {
+        FileDatabase<Absent> db = new FileDatabase<Absent>(Absent.databasePath);
+        db.load();
+        db.remove(this);
+        db.save();
+    }
+
+    public boolean equals(Object obj) 
+    {
+        Absent absent = (Absent) obj;
+        if (absent.getId() == this.getId()) return true; 
+        return false;
     }
 
 
