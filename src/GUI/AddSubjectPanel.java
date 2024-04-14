@@ -60,12 +60,9 @@ public class AddSubjectPanel extends JPanel {
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Return to the menu panel
-                JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(AddSubjectPanel.this);
-                frame.getContentPane().removeAll();
-                frame.getContentPane().add(new MenuPanel());
-                frame.revalidate();
-                frame.repaint();
+                MenuPanel menuPanel = new MenuPanel();
+                MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(AddSubjectPanel.this);
+                mainFrame.setCurrentPanel(menuPanel);
             }
         });
 

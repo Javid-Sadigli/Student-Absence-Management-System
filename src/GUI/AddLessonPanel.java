@@ -101,12 +101,9 @@ public class AddLessonPanel extends JPanel {
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Perform action to switch to the MenuPanel
-                JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(AddLessonPanel.this);
-                frame.getContentPane().removeAll();
-                frame.getContentPane().add(new MenuPanel());
-                frame.revalidate();
-                frame.repaint();
+                MenuPanel menuPanel = new MenuPanel();
+                MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(AddLessonPanel.this);
+                mainFrame.setCurrentPanel(menuPanel);
             }
         });
 
@@ -143,7 +140,6 @@ public class AddLessonPanel extends JPanel {
     }
 
     private java.util.List<String> getSubjectNames() {
-        // Retrieve and return a list of subject names from the database
         List<String> subjectNames = new ArrayList<>();
         Subject[] subjects = Subject.getAll();
         for (Subject subject : subjects) {
@@ -154,17 +150,16 @@ public class AddLessonPanel extends JPanel {
 
 
     private int getSubjectIdByName(String subjectName) {
-        // Retrieve and return the group ID based on the group name
         Subject[] subjects = Subject.getAll();
         for (Subject subject : subjects) {
             if (subject.getName().equals(subjectName)) {
                 return subject.getId();
             }
         }
-        return -1; // Return -1 if group name is not found
+        return -1;
     }
 
-    // Getters and setters for panelTitle, lessonName, lessonTopic, dateMonth, and dateDay
+    //getters and setters for panelTitle, lessonName, lessonTopic, dateMonth, and dateDay
     public void setDateDay(int dateDay) {
         this.dateDay = dateDay;
     }

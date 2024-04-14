@@ -82,12 +82,9 @@ public class AddStudentPanel extends JPanel {
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Perform action to switch to the MenuPanel
-                JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(AddStudentPanel.this);
-                frame.getContentPane().removeAll();
-                frame.getContentPane().add(new MenuPanel());
-                frame.revalidate();
-                frame.repaint();
+                MenuPanel menuPanel = new MenuPanel();
+                MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(AddStudentPanel.this);
+                mainFrame.setCurrentPanel(menuPanel);
             }
         });
 

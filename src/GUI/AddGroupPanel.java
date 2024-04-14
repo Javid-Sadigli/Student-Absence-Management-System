@@ -52,8 +52,9 @@ public class AddGroupPanel extends JPanel {
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Implement action to return to the previous panel here
-                // You can hide or remove this panel and show the previous one
+                MenuPanel menuPanel = new MenuPanel();
+                MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(AddGroupPanel.this);
+                mainFrame.setCurrentPanel(menuPanel);
             }
         });
     }
