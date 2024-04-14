@@ -8,6 +8,9 @@ import interfaces.Model;
 import toolkit.DatabasePath;
 import toolkit.FileDatabase;
 
+/**
+ * A Lesson model for representing the lessons
+ */
 public class Lesson implements Model
 {
     private int id; 
@@ -18,6 +21,12 @@ public class Lesson implements Model
     private static String modelName = "Lesson";
     private static String databasePath = DatabasePath.getDatabasePath(modelName);
 
+    /**
+     * A constructor function for initializing a new instance of the Lesson model 
+     * @param date The date of the lesson
+     * @param subjectId The id of the subject that the lesson belongs to
+     * @param room The id of the room that the lesson will be
+     */
     public Lesson(Date date, int subjectId, int room)
     {
         this.room = room;
@@ -26,40 +35,74 @@ public class Lesson implements Model
         this.id = 0;
     }
 
-    /* Getters */
+    /**
+     * Getter method for getting the id of the lesson
+     * @return The id of the lesson
+     */
     public int getId()
     {
         return this.id;
     }
+
+    /**
+     * Getter method for getting the date of the lesson
+     * @return The date of the lesson
+     */
     public Date getDate()
     {
         return this.date;
     }
 
-    //modified by FF
+    /**
+     * Getter method for getting the subject that owns this lesson
+     * @return The subject that owns this lesson
+     * @see Subject#findById(int)
+     */
     public Subject getSubject() 
     {
         return Subject.findById(this.subjectId);
     }
 
+    /**
+     * Getter method for getting the room of the lesson
+     * @return The room of the lesson
+     */
     public int getRoom()
     {
         return this.room;
     }
 
-    /* Setters */
+    /**
+     * Setter method for changing the date of the lesson
+     * @param date New date of the lesson
+     */
     public void setDate(Date date)
     {
         this.date = date;
     }
+
+    /**
+     * Setter method for changing the room of the lesson
+     * @param room New room of the lesson
+     */
     public void setRoom(int room)
     {
         this.room = room;
     }
+
+    /**
+     * Setter method for changing the subject id of the lesson
+     * @param subjectId New subject id of the lesson
+     */
     public void setSubjectId(int subjectId)
     {
         this.subjectId = subjectId;
     }
+
+    /**
+     * Setter method for setting the id of the lesson
+     * It set's this object's id by incrementing the object's id that is the latest object in the database.
+     */
     private void setId()
     {
         Lesson[] lessons = Lesson.getAll();
@@ -76,7 +119,11 @@ public class Lesson implements Model
         }
     }
 
-    /* Static methods */
+    /**
+     * Static method for getting all lesson objects from the database. 
+     * @return An array of objects that fetched from the database
+     * @see FileDatabase
+     */
     public static Lesson[] getAll()
     {
         FileDatabase<Lesson> db = new FileDatabase<Lesson>(Lesson.databasePath);
@@ -84,6 +131,13 @@ public class Lesson implements Model
         Collection<Lesson> lessonCollection = db.getAll(); 
         return lessonCollection.toArray(new Lesson[lessonCollection.size()]);
     }
+
+    /**
+     * Static method for fetching a lesson object from the database by using its id 
+     * @param id The id of the object that we are searching for
+     * @return The object that fetched from the database using its id
+     * @see FileDatabase
+     */
     public static Lesson findById(int id)
     {
         FileDatabase<Lesson> db = new FileDatabase<Lesson>(Lesson.databasePath);
@@ -98,6 +152,13 @@ public class Lesson implements Model
         }
         return null; 
     }
+
+    /**
+     * Static method for getting a subject's all lessons
+     * @param subjectId The id of the subject whose lessons are going to be searched. 
+     * @return An array of all lessons that found by using the subject's id.
+     * @see FileDatabase
+     */
     public static Lesson[] filterBySubject(int subjectId)
     {
         FileDatabase<Lesson> db = new FileDatabase<Lesson>(Lesson.databasePath);
@@ -115,6 +176,12 @@ public class Lesson implements Model
         return filteredLessonList.toArray(new Lesson[filteredLessonList.size()]);
     }
 
+    /**
+     * Static method for getting the lessons that is in the same room 
+     * @param room The room that the lessons will be in
+     * @return An array of all lessons 
+     * @see FileDatabase
+     */
     public static Lesson[] filterByRoom(int room)
     {
         FileDatabase<Lesson> db = new FileDatabase<Lesson>(Lesson.databasePath);
@@ -132,6 +199,13 @@ public class Lesson implements Model
         return filteredLessonList.toArray(new Lesson[filteredLessonList.size()]);
     }
 
+    /**
+     * Overriden method for saving the lesson object to the database.
+     * It checks at first if the object is new or not. 
+     * If the object is new, then it sets the new id and saves the object.
+     * If the object exists, then it replaces the existing object with this object. 
+     * @see FileDatabase
+     */
     @Override
     public void save()
     {
@@ -150,6 +224,10 @@ public class Lesson implements Model
         }
     }
 
+    /**
+     * Overridden method for deleting lesson objects from the database. 
+     * @see FileDatabase
+     */
     @Override 
     public void destroy()
     {
@@ -159,6 +237,10 @@ public class Lesson implements Model
         db.save();
     }
 
+    /**
+     * Overridden method for checking if this object equals to another or not.
+     * It checks if their id's are equal or not. If they are equal, it considers the objects as equal. 
+     */
     @Override
     public boolean equals(Object obj) 
     {
@@ -167,8 +249,13 @@ public class Lesson implements Model
         return false;
     }
 
+    /**
+     * Overriden method for getting the String representation of the lesson object
+     * @return Lesson's date, subject and room
+     */
     @Override
-    public String toString() {
+    public String toString() 
+    {
         String subjectName = (this.getSubject() != null) ? this.getSubject().getName() : "Unknown";
         return "Date: " + this.date.toString() + ", Subject: " + subjectName + ", Room: " + this.room;
     }

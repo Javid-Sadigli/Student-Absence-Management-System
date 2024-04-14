@@ -97,8 +97,9 @@ public class Absent implements Model
     }
 
     /**
-     * Static method for getting all the absent objects from the database. 
+     * Static method for getting all absent objects from the database. 
      * @return An array of objects that fetched from the database
+     * @see FileDatabase
      */
     public static Absent[] getAll()
     {
@@ -112,6 +113,7 @@ public class Absent implements Model
      * Static method for fetching an absent object from the database by using its id 
      * @param id The id of the object that we are searching for
      * @return The object that fetched from the database using its id
+     * @see FileDatabase
      */
     public static Absent findById(int id)
     {
@@ -132,6 +134,7 @@ public class Absent implements Model
      * Static method for getting a student's all absents.
      * @param studentId The id of the student whose absents are going to be searched. 
      * @return An array of all absents that found by using the student's id.
+     * @see FileDatabase
      */
     public static Absent[] filterByStudent(int studentId)
     {
@@ -154,6 +157,7 @@ public class Absent implements Model
      * Static method for getting all absents for a lesson object.
      * @param lessonId The id of the lesson that is going to be used for fetching absents
      * @return An array of all absents that found by using the lesson id. 
+     * @see FileDatabase
      */
     public static Absent[] filterByLesson(int lessonId)
     {
@@ -176,6 +180,7 @@ public class Absent implements Model
      * A static method for getting all absents for one subject.
      * @param subjectId The id of the subject that is going to be used for fetching absents
      * @return An array of all absents that found by using the subject id.
+     * @see FileDatabase
      */
     public static Absent[] filterBySubject(int subjectId)
     {
@@ -199,6 +204,7 @@ public class Absent implements Model
      * @param studentId The id of the student that is going to be used for fetching the absents
      * @param subjectId The id of the subject that is going to be used for fetching the absents
      * @return An array of student's absents for one subject 
+     * @see FileDatabase
      */
     public static Absent[] filterByStudentAndSubject(int studentId, int subjectId)
     {
@@ -219,10 +225,11 @@ public class Absent implements Model
 
 
     /**
-     * Overriden method for saving the object to the database.
+     * Overriden method for saving the absent object to the database.
      * It checks at first if the object is new or not. 
      * If the object is new, then it sets the new id and saves the object.
      * If the object exists, then it replaces the existing object with this object. 
+     * @see FileDatabase
      */
     @Override
     public void save()
@@ -243,7 +250,8 @@ public class Absent implements Model
     }
 
     /**
-     * Overridden method for deleting objects from the database. 
+     * Overridden method for deleting absent objects from the database. 
+     * @see FileDatabase
      */
     @Override
     public void destroy()
@@ -265,6 +273,4 @@ public class Absent implements Model
         if (absent.getId() == this.getId()) return true; 
         return false;
     }
-
-
 }
