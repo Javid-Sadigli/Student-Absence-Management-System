@@ -171,4 +171,10 @@ public class Lesson implements Model
         return false;
     }
 
+    @Override
+    public String toString() {
+        String subjectName = (this.getSubject() != null) ? this.getSubject().getName() : "Unknown";
+        return "Date: " + this.date.toString() + ", Subject: " + subjectName + ", Room: " + this.room;
+    }
+
 }
