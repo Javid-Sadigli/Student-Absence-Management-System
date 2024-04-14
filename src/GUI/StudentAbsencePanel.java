@@ -8,11 +8,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 
+/**
+ * A panel for displaying student absences.
+ */
 public class StudentAbsencePanel extends JPanel {
     private Student student;
     Absent[] allAbsences;
     Absent[] subjectAbsences;
 
+    /**
+     * Constructs the StudentAbsencePanel.
+     *
+     * @param student The student whose absences are being displayed.
+     */
     public StudentAbsencePanel(Student student) {
         this.student = student;
 
