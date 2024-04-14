@@ -41,6 +41,7 @@ public class CheckPresence extends JPanel {
         // Create buttons for adding and deleting lessons
         JButton addButton = new JButton("Add Lesson");
         JButton deleteButton = new JButton("Delete Lesson");
+        JButton returnButton = new JButton("Return");
 
         // Set layout to BorderLayout
         setLayout(new BorderLayout());
@@ -50,6 +51,7 @@ public class CheckPresence extends JPanel {
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.add(addButton);
         buttonPanel.add(deleteButton);
+        buttonPanel.add(returnButton);
 
         // Add button panel to the top of the panel
         add(buttonPanel, BorderLayout.NORTH);
@@ -86,17 +88,14 @@ public class CheckPresence extends JPanel {
 
         // Add action listeners for the buttons
         addButton.addActionListener(e -> {
-            // Implement logic to add a lesson
-            // You can create a new panel for adding lessons or show a dialog
-            // Example:
+
             AddLessonPanel addLessonPanel = new AddLessonPanel();
             MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(CheckPresence.this);
             mainFrame.setCurrentPanel(addLessonPanel);
         });
 
         deleteButton.addActionListener(e -> {
-            // Implement logic to delete a lesson
-            // Example:
+
             int selectedIndex = lessonList.getSelectedIndex();
             if (selectedIndex >= 0 && selectedIndex < lessons.size()) {
                 Lesson selectedLesson = lessons.get(selectedIndex);
@@ -106,6 +105,12 @@ public class CheckPresence extends JPanel {
             } else {
                 JOptionPane.showMessageDialog(CheckPresence.this, "Please select a lesson to delete.");
             }
+        });
+
+        returnButton.addActionListener(e -> {
+            MenuPanel menuPanel = new MenuPanel();
+            MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(CheckPresence.this);
+            mainFrame.setCurrentPanel(menuPanel);
         });
     }
 

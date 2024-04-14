@@ -8,15 +8,9 @@ import java.util.Arrays;
 import java.util.List;
 import models.Lesson;
 
-/**
- * A class that inherited from JPanel class that implements the Menu Panel
- */
 public class MenuPanel extends JPanel {
     private String panelTitle;
 
-    /**
-     * A constructor for initializing the Menu Panel
-     */
     public MenuPanel() {
         // GridBagLayout for MenuPanel
         this.setLayout(new GridBagLayout());
@@ -26,7 +20,6 @@ public class MenuPanel extends JPanel {
         // creating buttons
         JButton studentsButton = new JButton("Students");
         JButton groupsButton = new JButton("Groups");
-        JButton addLessonButton = new JButton("Add Lesson");
         JButton checkPresenceButton = new JButton("Check Presence");
         JButton subjectsButton = new JButton("Subjects"); // Renamed button for Subjects
 
@@ -34,7 +27,6 @@ public class MenuPanel extends JPanel {
         Dimension buttonSize = new Dimension(300, 50);
         studentsButton.setPreferredSize(buttonSize);
         groupsButton.setPreferredSize(buttonSize);
-        addLessonButton.setPreferredSize(buttonSize);
         checkPresenceButton.setPreferredSize(buttonSize);
         subjectsButton.setPreferredSize(buttonSize); // Set size for new button
 
@@ -51,7 +43,7 @@ public class MenuPanel extends JPanel {
         this.add(groupsButton, gbc);
 
         gbc.gridy++;
-        this.add(addLessonButton, gbc);
+        gbc.gridy++; // Skip the row for the removed button
 
         gbc.gridy++;
         this.add(checkPresenceButton, gbc);
@@ -78,15 +70,6 @@ public class MenuPanel extends JPanel {
             }
         });
 
-        addLessonButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AddLessonPanel addLessonPanel = new AddLessonPanel();
-                MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
-                mainFrame.setCurrentPanel(addLessonPanel);
-            }
-        });
-
         checkPresenceButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -108,10 +91,6 @@ public class MenuPanel extends JPanel {
         });
     }
 
-    /**
-     * Method for getting the title of the panel
-     * @return The title of the panel
-     */
     public String getPanelTitle() {
         return panelTitle;
     }

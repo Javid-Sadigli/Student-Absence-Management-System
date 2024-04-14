@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class StudentsPanel extends JPanel {
     private JList<String> studentsList;
@@ -75,6 +77,25 @@ public class StudentsPanel extends JPanel {
                 MenuPanel menuPanel = new MenuPanel();
                 MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(StudentsPanel.this);
                 mainFrame.setCurrentPanel(menuPanel);
+            }
+        });
+
+        // Add a MouseListener to handle double-click event on students list
+        studentsList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    int index = studentsList.locationToIndex(e.getPoint());
+                    if (index != -1) {
+                        String selectedStudent = studentsModel.getElementAt(index);
+                        // Retrieve the student object from the database
+                        Student student = Student.findByName(selectedStudent);
+                        // Show the panel displaying student's absences
+                        StudentAbsencePanel absencePanel = new StudentAbsencePanel(student);
+                        MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(StudentsPanel.this);
+                        mainFrame.setCurrentPanel(absencePanel);
+                    }
+                }
             }
         });
     }

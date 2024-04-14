@@ -13,15 +13,18 @@ public class StudentListPanel extends JPanel {
     private JList<String> allStudentsList;
     private JList<String> absentStudentsList;
     private Student[] allStudentsArray;
+    private Lesson currentLesson;
 
     public StudentListPanel(Lesson lesson) {
-        //get group ID
+        this.currentLesson = lesson;
+
+        // Get group ID
         int groupId = lesson.getSubject().getGroup().getId();
 
-        //get students of selected group by ID
+        // Get students of selected group by ID
         allStudentsArray = Student.filterByGroup(groupId);
 
-        //all students
+        // All students get to array
         List<Student> allStudents = new ArrayList<>();
         for (Student student : allStudentsArray) {
             allStudents.add(student);
@@ -31,24 +34,19 @@ public class StudentListPanel extends JPanel {
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        //create list models for all students and absent students
+        // Create list models for all students and absent students
         DefaultListModel<String> allStudentsModel = new DefaultListModel<>();
         DefaultListModel<String> absentStudentsModel = new DefaultListModel<>();
 
-        //all students
-        for (Student student : allStudents) {
-            allStudentsModel.addElement(student.getFullName());
-        }
 
-        //create JLists
+        // Create JLists
         allStudentsList = new JList<>(allStudentsModel);
         absentStudentsList = new JList<>(absentStudentsModel);
 
-        //create scroll panes for the lists
+        // Create scroll panes for the lists
         JScrollPane allStudentsScrollPane = new JScrollPane(allStudentsList);
         JScrollPane absentStudentsScrollPane = new JScrollPane(absentStudentsList);
 
-        // Add JLists to the panel
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weightx = 1.0;
@@ -59,12 +57,13 @@ public class StudentListPanel extends JPanel {
         gbc.gridx = 1;
         this.add(absentStudentsScrollPane, gbc);
 
-        //add buttons to move students between lists
+        // Add buttons to move students between lists
         JButton addToAbsentButton = new JButton("Add to Absent");
         JButton removeFromAbsentButton = new JButton("Remove from Absent");
-        JButton saveButton = new JButton("Save"); // Added save button
+        JButton saveButton = new JButton("Save");
+        JButton returnButton = new JButton("Return to Menu"); // Add the return button
 
-        //add buttons to a separate panel to ensure they don't take up unnecessary space
+        // Add buttons to a separate panel to ensure they don't take up unnecessary space
         JPanel buttonPanel = new JPanel(new GridBagLayout());
         GridBagConstraints buttonGBC = new GridBagConstraints();
         buttonGBC.insets = new Insets(5, 5, 5, 5);
@@ -76,17 +75,41 @@ public class StudentListPanel extends JPanel {
         buttonGBC.gridx = 1;
         buttonPanel.add(removeFromAbsentButton, buttonGBC);
 
-        //reset buttonGBC for submit button
+        // Reset buttonGBC for submit button
         buttonGBC.gridx = 0;
         buttonGBC.gridy = 1;
         buttonGBC.gridwidth = 2;
-        buttonPanel.add(saveButton, buttonGBC); // Add save button
+        buttonPanel.add(saveButton, buttonGBC);
+
+        // Add the return button
+        buttonGBC.gridy = 2;
+        buttonPanel.add(returnButton, buttonGBC);
 
         // Add buttonPanel to the main panel
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 2;
         this.add(buttonPanel, gbc);
+
+        // Load absences for the current lesson
+        Absent[] absences = Absent.filterByLesson(lesson.getId());
+        for (Absent absence : absences) {
+            absentStudentsModel.addElement(absence.getStudent().getFullName());
+        }
+
+        // All students add to model
+        for (Student student : allStudents) {
+            boolean isAbsent = false;
+            for (Absent absence : absences) {
+                if (student.getFullName().equals(absence.getStudent().getFullName())) {
+                    isAbsent = true;
+                    break;
+                }
+            }
+            if (!isAbsent) {
+                allStudentsModel.addElement(student.getFullName());
+            }
+        }
 
         // CONTROLLERS
         addToAbsentButton.addActionListener(e -> {
@@ -98,10 +121,13 @@ public class StudentListPanel extends JPanel {
         });
 
         removeFromAbsentButton.addActionListener(e -> {
-            String selectedStudent = absentStudentsList.getSelectedValue();
-            if (selectedStudent != null) {
-                absentStudentsModel.removeElement(selectedStudent);
-                allStudentsModel.addElement(selectedStudent);
+            String selectedStudentName = absentStudentsList.getSelectedValue();
+            if (selectedStudentName != null) {
+                absentStudentsModel.removeElement(selectedStudentName);
+                allStudentsModel.addElement(selectedStudentName);
+                Student selectedStudent = Student.findByName(selectedStudentName);
+                Absent absent = Absent.findByLessonAndStudent(lesson.getId(), selectedStudent.getId());
+                absent.destroy();
             }
         });
 
@@ -115,7 +141,18 @@ public class StudentListPanel extends JPanel {
                     absent.save();
                     JOptionPane.showMessageDialog(this, "Absent students saved successfully!");
                 }
+                else{
+                    JOptionPane.showMessageDialog(this, "Absent students saved successfully! No absent students.");
+                }
             }
+        });
+
+        // Add action listener to return button
+        returnButton.addActionListener(e -> {
+            // Return to the main menu
+            MenuPanel menuPanel = new MenuPanel();
+            MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(StudentListPanel.this);
+            mainFrame.setCurrentPanel(menuPanel);
         });
     }
 }
