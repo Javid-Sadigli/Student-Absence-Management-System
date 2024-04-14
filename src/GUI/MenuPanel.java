@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import models.Lesson;
@@ -19,19 +18,19 @@ public class MenuPanel extends JPanel {
         panelTitle = "Attendance Management System";
 
         // creating buttons
-        JButton addStudentButton = new JButton("Add Student");
+        JButton studentsButton = new JButton("Students");
+        JButton groupsButton = new JButton("Groups");
         JButton addLessonButton = new JButton("Add Lesson");
         JButton checkPresenceButton = new JButton("Check Presence");
-        JButton addSubjectButton = new JButton("Add Subject"); // New button for Add Subject
-        JButton addGroupButton = new JButton("Add Group"); // New button for Add Group
+        JButton subjectsButton = new JButton("Subjects"); // Renamed button for Subjects
 
         // make buttons larger
         Dimension buttonSize = new Dimension(300, 50);
-        addStudentButton.setPreferredSize(buttonSize);
+        studentsButton.setPreferredSize(buttonSize);
+        groupsButton.setPreferredSize(buttonSize);
         addLessonButton.setPreferredSize(buttonSize);
         checkPresenceButton.setPreferredSize(buttonSize);
-        addSubjectButton.setPreferredSize(buttonSize); // Set size for new buttons
-        addGroupButton.setPreferredSize(buttonSize);
+        subjectsButton.setPreferredSize(buttonSize); // Set size for new button
 
         // GridBagConstraints for button positioning
         GridBagConstraints gbc = new GridBagConstraints();
@@ -40,7 +39,10 @@ public class MenuPanel extends JPanel {
         gbc.insets = new Insets(10, 10, 10, 10); // add some padding
 
         // adding buttons to the panel with GridBagConstraints
-        this.add(addStudentButton, gbc);
+        this.add(studentsButton, gbc);
+
+        gbc.gridy++;
+        this.add(groupsButton, gbc);
 
         gbc.gridy++;
         this.add(addLessonButton, gbc);
@@ -49,19 +51,24 @@ public class MenuPanel extends JPanel {
         this.add(checkPresenceButton, gbc);
 
         gbc.gridy++;
-        this.add(addSubjectButton, gbc); // Add the new button to the panel
-
-        gbc.gridy++;
-        this.add(addGroupButton, gbc); // Add the new button to the panel
-
+        this.add(subjectsButton, gbc); // Add the new button to the panel
 
         //CONTROLLERS
-        addStudentButton.addActionListener(new ActionListener() {
+        studentsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddStudentPanel addStudentPanel = new AddStudentPanel();
+                StudentsPanel studentsPanel = new StudentsPanel();
                 MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
-                mainFrame.setCurrentPanel(addStudentPanel);
+                mainFrame.setCurrentPanel(studentsPanel);
+            }
+        });
+
+        groupsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GroupsPanel groupsPanel = new GroupsPanel();
+                MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
+                mainFrame.setCurrentPanel(groupsPanel);
             }
         });
 
@@ -85,24 +92,14 @@ public class MenuPanel extends JPanel {
             }
         });
 
-        addSubjectButton.addActionListener(new ActionListener() {
+        subjectsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddSubjectPanel addSubjectPanel = new AddSubjectPanel(); // Create an instance of AddSubjectPanel
+                SubjectsPanel subjectsPanel = new SubjectsPanel(); // Create an instance of SubjectsPanel
                 MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
-                mainFrame.setCurrentPanel(addSubjectPanel); // Set the current panel to AddSubjectPanel
+                mainFrame.setCurrentPanel(subjectsPanel); // Set the current panel to SubjectsPanel
             }
         });
-
-        addGroupButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AddGroupPanel addGroupPanel = new AddGroupPanel(); // Create an instance of AddGroupPanel
-                MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
-                mainFrame.setCurrentPanel(addGroupPanel); // Set the current panel to AddGroupPanel
-            }
-        });
-
     }
 
     public String getPanelTitle() {

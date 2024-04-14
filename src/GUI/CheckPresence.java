@@ -38,6 +38,29 @@ public class CheckPresence extends JPanel {
         // Set the model
         lessonList.setModel(lessonListModel);
 
+        // Create buttons for adding and deleting lessons
+        JButton addButton = new JButton("Add Lesson");
+        JButton deleteButton = new JButton("Delete Lesson");
+
+        // Set layout to BorderLayout
+        setLayout(new BorderLayout());
+
+        // Create a JPanel for the buttons
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.add(addButton);
+        buttonPanel.add(deleteButton);
+
+        // Add button panel to the top of the panel
+        add(buttonPanel, BorderLayout.NORTH);
+
+        // Wrap the list in a JScrollPane
+        JScrollPane scrollPane = new JScrollPane(lessonList);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        // Add the scroll pane to the center of the panel
+        add(scrollPane, BorderLayout.CENTER);
+
         //CONTROLLERS
         lessonList.addMouseListener(new MouseAdapter() {
             @Override
@@ -61,15 +84,29 @@ public class CheckPresence extends JPanel {
             }
         });
 
-        // Wrap the list in a JScrollPane
-        JScrollPane scrollPane = new JScrollPane(lessonList);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        // Add action listeners for the buttons
+        addButton.addActionListener(e -> {
+            // Implement logic to add a lesson
+            // You can create a new panel for adding lessons or show a dialog
+            // Example:
+            AddLessonPanel addLessonPanel = new AddLessonPanel();
+            MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(CheckPresence.this);
+            mainFrame.setCurrentPanel(addLessonPanel);
+        });
 
-        // Set layout to BorderLayout
-        setLayout(new BorderLayout());
-
-        // Add the scroll pane to the center of the panel
-        add(scrollPane, BorderLayout.CENTER);
+        deleteButton.addActionListener(e -> {
+            // Implement logic to delete a lesson
+            // Example:
+            int selectedIndex = lessonList.getSelectedIndex();
+            if (selectedIndex >= 0 && selectedIndex < lessons.size()) {
+                Lesson selectedLesson = lessons.get(selectedIndex);
+                selectedLesson.destroy();
+                lessonListModel.remove(selectedIndex);
+                JOptionPane.showMessageDialog(CheckPresence.this, "Lesson deleted successfully.");
+            } else {
+                JOptionPane.showMessageDialog(CheckPresence.this, "Please select a lesson to delete.");
+            }
+        });
     }
 
     public String getPanelTitle() {
