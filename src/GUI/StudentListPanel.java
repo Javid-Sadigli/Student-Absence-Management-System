@@ -9,12 +9,20 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A panel for managing student attendance in a lesson.
+ */
 public class StudentListPanel extends JPanel {
     private JList<String> allStudentsList;
     private JList<String> absentStudentsList;
     private Student[] allStudentsArray;
     private Lesson currentLesson;
 
+    /**
+     * Constructs the StudentListPanel.
+     *
+     * @param lesson The lesson for which student attendance is being managed.
+     */
     public StudentListPanel(Lesson lesson) {
         this.currentLesson = lesson;
 
