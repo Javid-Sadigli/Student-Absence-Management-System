@@ -112,6 +112,20 @@ public class Student implements Model
         }
         return null; 
     }
+    public static Student findByName(String fullName)
+    {
+        FileDatabase<Student> db = new FileDatabase<Student>(Student.databasePath);
+        db.load();
+        Collection<Student> studentCollection = db.getAll(); 
+        for(Student student : studentCollection)
+        {
+            if(student.getFullName().equals(fullName))
+            {
+                return student; 
+            }
+        }
+        return null; 
+    }
     
 
     @Override

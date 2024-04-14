@@ -108,7 +108,7 @@ public class StudentListPanel extends JPanel {
         saveButton.addActionListener(e -> {
             for (int i = 0; i < absentStudentsModel.getSize(); i++) {
                 String studentName = absentStudentsModel.getElementAt(i);
-                Student student = findByName(studentName);
+                Student student = Student.findByName(studentName);
 
                 if (student != null) {
                     Absent absent = new Absent(student.getId(), lesson.getId());
@@ -117,15 +117,5 @@ public class StudentListPanel extends JPanel {
                 }
             }
         });
-    }
-
-    // Method to find a student by name
-    private Student findByName(String name) {
-        for (Student student : allStudentsArray) {
-            if (student.getFullName().equals(name)) {
-                return student;
-            }
-        }
-        return null;
     }
 }
