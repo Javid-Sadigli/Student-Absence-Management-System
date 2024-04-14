@@ -1,11 +1,14 @@
 package GUI;
 
 import models.Group;
+import models.Student;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class GroupsPanel extends JPanel {
     private JList<String> groupsList;
@@ -42,6 +45,28 @@ public class GroupsPanel extends JPanel {
         JButton returnButton = new JButton("Return");
         gbc.gridy = 3;
         this.add(returnButton, gbc);
+
+        // Add double-click listener to the groupsList
+        groupsList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    int selectedIndex = groupsList.getSelectedIndex();
+                    if (selectedIndex != -1) {
+                        Group selectedGroup = allGroups[selectedIndex];
+                        // Get students of the selected group
+                        Student[] students = selectedGroup.getStudents();
+                        // Create a StringBuilder to store student names
+                        StringBuilder studentNames = new StringBuilder();
+                        for (Student student : students) {
+                            studentNames.append(student.getFullName()).append("\n");
+                        }
+                        // Show student names in a dialog
+                        JOptionPane.showMessageDialog(GroupsPanel.this, studentNames.toString(), "Students in " + selectedGroup.getName(), JOptionPane.PLAIN_MESSAGE);
+                    }
+                }
+            }
+        });
 
         deleteButton.addActionListener(new ActionListener() {
             @Override
