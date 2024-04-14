@@ -35,10 +35,17 @@ public class Lesson implements Model
     {
         return this.date;
     }
-    public Subject getSubject()
-    {
-        return Subject.findById(this.subjectId);
+
+    //modified by FF
+    public Subject getSubject() {
+        Subject subject = Subject.findById(this.subjectId);
+        if (subject == null) {
+            System.out.println("Subject with ID " + this.subjectId + " not found.");
+            // You may choose to throw an exception here or handle it based on your application logic
+        }
+        return subject;
     }
+
     public int getRoom()
     {
         return this.room;

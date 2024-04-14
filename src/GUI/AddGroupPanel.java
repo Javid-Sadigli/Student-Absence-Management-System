@@ -35,6 +35,10 @@ public class AddGroupPanel extends JPanel {
         JButton submitButton = new JButton("Submit");
         this.add(submitButton, gbc);
 
+        JButton returnButton = new JButton("Return"); // Create return button
+        gbc.gridy++;
+        this.add(returnButton, gbc); // Add return button to the panel
+
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -42,6 +46,14 @@ public class AddGroupPanel extends JPanel {
                 Group newGroup = new Group(groupName);
                 newGroup.save();
                 JOptionPane.showMessageDialog(AddGroupPanel.this, "Group saved successfully!");
+            }
+        });
+
+        returnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Implement action to return to the previous panel here
+                // You can hide or remove this panel and show the previous one
             }
         });
     }

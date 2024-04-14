@@ -137,6 +137,7 @@ public class AddLessonPanel extends JPanel {
 
                 // Save the Lesson object
                 lesson.save();
+                JOptionPane.showMessageDialog(AddLessonPanel.this, "Lesson saved successfully!");
             }
         });
     }
@@ -152,7 +153,7 @@ public class AddLessonPanel extends JPanel {
     }
 
 
-    private int getSubjectIdByName(String groupName) {
+    private int getSubjectIdByName(String subjectName) {
         // Retrieve and return the group ID based on the group name
         Subject[] subjects = Subject.getAll();
         for (Subject subject : subjects) {
