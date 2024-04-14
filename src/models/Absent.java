@@ -103,6 +103,23 @@ public class Absent implements Model
         return filteredAbsentList.toArray(new Absent[filteredAbsentList.size()]);
     }
 
+    public static Absent[] filterByLesson(int lessonId)
+    {
+        FileDatabase<Absent> db = new FileDatabase<Absent>(Absent.databasePath);
+        db.load();
+        Collection<Absent> absentCollection = db.getAll(); 
+        Collection<Absent> filteredAbsentList = new ArrayList<Absent>();
+        
+        for(Absent absent : absentCollection)
+        {
+            if(absent.getLesson().getId() == lessonId)
+            {
+                filteredAbsentList.add(absent);
+            }
+        }
+        return filteredAbsentList.toArray(new Absent[filteredAbsentList.size()]);
+    }
+
     public static Absent[] filterBySubject(int subjectId)
     {
         FileDatabase<Absent> db = new FileDatabase<Absent>(Absent.databasePath);
