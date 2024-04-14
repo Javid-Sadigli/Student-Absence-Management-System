@@ -177,6 +177,29 @@ public class Absent implements Model
     }
 
     /**
+     * A static method for finding a student's absent for a spesific lesson
+     * @param lessonId The id of the lesson that is going to be used for fetching the absents
+     * @param studentId The id of the student that is going to be used for fetching the absents
+     * @return An array of student's absents for a spesific lesson
+     * @see FileDatabase
+     */
+    public static Absent findByLessonAndStudent(int lessonId, int studentId)
+    {
+        FileDatabase<Absent> db = new FileDatabase<Absent>(Absent.databasePath);
+        db.load();
+        Collection<Absent> absentCollection = db.getAll(); 
+        
+        for(Absent absent : absentCollection)
+        {
+            if(absent.getLesson().getId() == lessonId && absent.getStudent().getId() == studentId)
+            {
+                return absent;
+            }
+        }
+        return null; 
+    }
+
+    /**
      * A static method for getting all absents for one subject.
      * @param subjectId The id of the subject that is going to be used for fetching absents
      * @return An array of all absents that found by using the subject id.

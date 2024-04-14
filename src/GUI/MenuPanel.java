@@ -8,9 +8,15 @@ import java.util.Arrays;
 import java.util.List;
 import models.Lesson;
 
+/**
+ * A class that inherited from JPanel class that implements the Menu Panel
+ */
 public class MenuPanel extends JPanel {
     private String panelTitle;
 
+    /**
+     * A constructor for initializing the Menu Panel
+     */
     public MenuPanel() {
         // GridBagLayout for MenuPanel
         this.setLayout(new GridBagLayout());
@@ -102,6 +108,10 @@ public class MenuPanel extends JPanel {
         });
     }
 
+    /**
+     * Method for getting the title of the panel
+     * @return The title of the panel
+     */
     public String getPanelTitle() {
         return panelTitle;
     }
