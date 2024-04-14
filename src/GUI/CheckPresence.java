@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 /**
- * A panel for checking attendance.
+ * A panel for checking attendance. 
  */
 public class CheckPresence extends JPanel {
     private String panelTitle;
