@@ -1,5 +1,6 @@
 package GUI;
 
+import models.Absent;
 import models.Lesson;
 import models.Subject;
 
@@ -10,18 +11,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-/**
- * A panel for checking attendance.
- */
 public class CheckPresence extends JPanel {
     private String panelTitle;
     private JList<String> lessonList;
 
-    /**
-     * Constructs the CheckPresence panel.
-     *
-     * @param lessons The list of lessons to display.
-     */
     public CheckPresence(List<Lesson> lessons) {
         this.panelTitle = "Attendance";
 
@@ -109,6 +102,11 @@ public class CheckPresence extends JPanel {
                 Lesson selectedLesson = lessons.get(selectedIndex);
                 selectedLesson.destroy();
                 lessonListModel.remove(selectedIndex);
+                Absent[] selectedAbsents = Absent.filterByLesson(selectedLesson.getId());
+                for (Absent absent : selectedAbsents){
+                    absent.destroy();
+                }
+                selectedLesson.destroy();
                 JOptionPane.showMessageDialog(CheckPresence.this, "Lesson deleted successfully.");
             } else {
                 JOptionPane.showMessageDialog(CheckPresence.this, "Please select a lesson to delete.");
@@ -122,11 +120,6 @@ public class CheckPresence extends JPanel {
         });
     }
 
-    /**
-     * Gets the panel title.
-     *
-     * @return The panel title.
-     */
     public String getPanelTitle() {
         return panelTitle;
     }

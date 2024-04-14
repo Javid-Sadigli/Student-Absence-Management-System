@@ -8,16 +8,9 @@ import java.util.Arrays;
 import java.util.List;
 import models.Lesson;
 
-/**
- * MenuPanel class that is inherited from JPanel. 
- * It displays the menu panel.
- */
 public class MenuPanel extends JPanel {
     private String panelTitle;
 
-    /**
-     * Constructor function for initializing MenuPanel.
-     */
     public MenuPanel() {
         // GridBagLayout for MenuPanel
         this.setLayout(new GridBagLayout());
@@ -58,7 +51,7 @@ public class MenuPanel extends JPanel {
         gbc.gridy++;
         this.add(subjectsButton, gbc); // Add the new button to the panel
 
-        
+        //CONTROLLERS
         studentsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -98,10 +91,6 @@ public class MenuPanel extends JPanel {
         });
     }
 
-    /**
-     * Function for getting the title of the panel
-     * @return The title of the panel
-     */
     public String getPanelTitle() {
         return panelTitle;
     }

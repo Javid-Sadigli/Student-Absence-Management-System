@@ -10,17 +10,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A panel for adding new subjects.
- */
 public class AddSubjectPanel extends JPanel {
 
     private String subjectName;
     private JComboBox<String> groupComboBox;
 
-    /**
-     * Constructs the AddSubjectPanel.
-     */
     public AddSubjectPanel() {
 
         this.setLayout(new GridBagLayout());
@@ -92,11 +86,6 @@ public class AddSubjectPanel extends JPanel {
 
     }
 
-    /**
-     * Retrieves a list of group names.
-     *
-     * @return A list of group names.
-     */
     private List<String> getGroupNames() {
         // Retrieve and return a list of group names from the database
         List<String> groupNames = new ArrayList<>();
@@ -107,12 +96,6 @@ public class AddSubjectPanel extends JPanel {
         return groupNames;
     }
 
-    /**
-     * Retrieves the ID of a group by its name.
-     *
-     * @param groupName The name of the group.
-     * @return The ID of the group.
-     */
     private int getGroupIdByName(String groupName) {
         // Retrieve and return the group ID based on the group name
         Group[] groups = Group.getAll();
@@ -124,11 +107,6 @@ public class AddSubjectPanel extends JPanel {
         return -1; // Return -1 if group name is not found
     }
 
-    /**
-     * Gets the name of the subject.
-     *
-     * @return The name of the subject.
-     */
     public String getSubjectName() {
         return subjectName;
     }

@@ -1,7 +1,6 @@
 package GUI;
 
-import models.Group;
-import models.Student;
+import models.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,15 +9,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-/**
- * A panel for managing groups.
- */
 public class GroupsPanel extends JPanel {
     private JList<String> groupsList;
 
-    /**
-     * Constructs the GroupsPanel.
-     */
     public GroupsPanel() {
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -82,6 +75,27 @@ public class GroupsPanel extends JPanel {
                     Group selectedGroup = allGroups[selectedIndex];
                     selectedGroup.destroy();
                     groupsModel.remove(selectedIndex);
+                    for(Student student : selectedGroup.getStudents()){
+                        student.destroy();
+                    }
+                    Subject[] selectedSubject = Subject.filterByGroup(selectedGroup.getId());
+                    for (Subject subject : selectedSubject){
+                        Lesson[] selectedLesson = Lesson.filterBySubject(subject.getId());
+                        for (Lesson lesson : selectedLesson){
+                            Absent[] selectedAbsent = Absent.filterByLesson(lesson.getId());
+                            for (Absent absent : selectedAbsent){
+                                absent.destroy();
+                            }
+
+                        }
+                        for (Lesson lesson : selectedLesson){
+                            lesson.destroy();
+                        }
+                    }
+                    for (Subject subject : selectedSubject){
+                        subject.destroy();
+                    }
+                    selectedGroup.destroy();
                     JOptionPane.showMessageDialog(GroupsPanel.this, "Group deleted successfully.");
                 } else {
                     JOptionPane.showMessageDialog(GroupsPanel.this, "Please select a group to delete.");

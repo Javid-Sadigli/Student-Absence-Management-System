@@ -14,9 +14,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-/**
- * A panel for adding new lessons.
- */
 public class AddLessonPanel extends JPanel {
 
     private String panelTitle;
@@ -26,9 +23,6 @@ public class AddLessonPanel extends JPanel {
     private int dateDay;
     private String subjectName;
 
-    /**
-     * Constructs the AddLessonPanel.
-     */
     public AddLessonPanel() {
         this.setLayout(new GridBagLayout());
         this.panelTitle = "New Lesson";
@@ -154,12 +148,7 @@ public class AddLessonPanel extends JPanel {
         return subjectNames;
     }
 
-    /**
-     * Retrieves the ID of a subject by its name.
-     * 
-     * @param subjectName The name of the subject.
-     * @return The ID of the subject.
-     */
+
     private int getSubjectIdByName(String subjectName) {
         Subject[] subjects = Subject.getAll();
         for (Subject subject : subjects) {
@@ -170,83 +159,39 @@ public class AddLessonPanel extends JPanel {
         return -1;
     }
 
-    /**
-     * Sets the day of the date.
-     * 
-     * @param dateDay The day of the date.
-     */
+    //getters and setters for panelTitle, lessonName, lessonTopic, dateMonth, and dateDay
     public void setDateDay(int dateDay) {
         this.dateDay = dateDay;
     }
 
-    /**
-     * Sets the month of the date.
-     * 
-     * @param dateMonth The month of the date.
-     */
     public void setDateMonth(int dateMonth) {
         this.dateMonth = dateMonth;
     }
 
-    /**
-     * Sets the name of the lesson.
-     * 
-     * @param lessonName The name of the lesson.
-     */
     public void setLessonName(String lessonName) {
         this.lessonName = lessonName;
     }
 
-    /**
-     * Sets the topic of the lesson.
-     * 
-     * @param lessonTopic The topic of the lesson.
-     */
     public void setLessonTopic(String lessonTopic) {
         this.lessonTopic = lessonTopic;
     }
 
-    /**
-     * Gets the panel title.
-     * 
-     * @return The panel title.
-     */
     public String getPanelTitle() {
         return panelTitle;
     }
 
-    /**
-     * Gets the day of the date.
-     * 
-     * @return The day of the date.
-     */
     public int getDateDay() {
         return dateDay;
     }
 
-    /**
-     * Gets the month of the date.
-     * 
-     * @return The month of the date.
-     */
     public int getDateMonth() {
         return dateMonth;
     }
 
-    /**
-     * Gets the name of the lesson.
-     * 
-     * @return The name of the lesson.
-     */
     public String getLessonName() {
         return lessonName;
     }
 
-    /**
-     * Gets the topic of the lesson.
-     * 
-     * @return The topic of the lesson.
-     */
     public String getLessonTopic() {
         return lessonTopic;
     }
