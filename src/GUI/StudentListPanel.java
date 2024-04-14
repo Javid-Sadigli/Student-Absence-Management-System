@@ -12,13 +12,14 @@ import java.util.List;
 public class StudentListPanel extends JPanel {
     private JList<String> allStudentsList;
     private JList<String> absentStudentsList;
+    private Student[] allStudentsArray;
 
     public StudentListPanel(Lesson lesson) {
         //get group ID
         int groupId = lesson.getSubject().getGroup().getId();
 
         //get students of selected group by ID
-        Student[] allStudentsArray = Student.filterByGroup(groupId);
+        allStudentsArray = Student.filterByGroup(groupId);
 
         //all students
         List<Student> allStudents = new ArrayList<>();
@@ -108,20 +109,21 @@ public class StudentListPanel extends JPanel {
             for (int i = 0; i < absentStudentsModel.getSize(); i++) {
                 String studentName = absentStudentsModel.getElementAt(i);
                 Student student = findByName(studentName);
+
                 if (student != null) {
                     Absent absent = new Absent(student.getId(), lesson.getId());
                     absent.save();
+                    JOptionPane.showMessageDialog(this, "Absent students saved successfully!");
                 }
             }
-            JOptionPane.showMessageDialog(this, "Absent students saved successfully!");
         });
     }
 
     // Method to find a student by name
     private Student findByName(String name) {
-        for (int i = 0; i < allStudentsList.getModel().getSize(); i++) {
-            if (allStudentsList.getModel().getElementAt(i).equals(name)) {
-                return Student.getAll()[i];
+        for (Student student : allStudentsArray) {
+            if (student.getFullName().equals(name)) {
+                return student;
             }
         }
         return null;
