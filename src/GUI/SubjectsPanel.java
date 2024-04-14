@@ -1,5 +1,7 @@
 package GUI;
 
+import models.Absent;
+import models.Lesson;
 import models.Subject;
 
 import javax.swing.*;
@@ -7,15 +9,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * A panel for managing subjects.
- */
 public class SubjectsPanel extends JPanel {
     private JList<String> subjectsList;
 
-    /**
-     * Constructs the SubjectsPanel.
-     */
     public SubjectsPanel() {
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -57,6 +53,17 @@ public class SubjectsPanel extends JPanel {
                     Subject selectedSubject = allSubjects[selectedIndex];
                     selectedSubject.destroy();
                     subjectsModel.remove(selectedIndex);
+                    Lesson[] selectedLessons = Lesson.filterBySubject(selectedSubject.getId());
+                    for (Lesson lesson : selectedLessons){
+                        Absent[] selectedAbsents = Absent.filterByLesson(lesson.getId());
+                        for (Absent absent : selectedAbsents){
+                            absent.destroy();
+                        }
+                    }
+                    for (Lesson lesson : selectedLessons){
+                        lesson.destroy();
+                    }
+                    selectedSubject.destroy();
                     JOptionPane.showMessageDialog(SubjectsPanel.this, "Subject deleted successfully.");
                 } else {
                     JOptionPane.showMessageDialog(SubjectsPanel.this, "Please select a subject to delete.");

@@ -1,5 +1,6 @@
 package GUI;
 
+import models.Absent;
 import models.Student;
 
 import javax.swing.*;
@@ -9,15 +10,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-/**
- * A panel for managing students.
- */
 public class StudentsPanel extends JPanel {
     private JList<String> studentsList;
 
-    /**
-     * Constructs the StudentsPanel.
-     */
     public StudentsPanel() {
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -59,6 +54,11 @@ public class StudentsPanel extends JPanel {
                     Student selectedStudent = allStudents[selectedIndex];
                     selectedStudent.destroy();
                     studentsModel.remove(selectedIndex);
+                    Absent[] selectedAbsent = Absent.filterByStudent(selectedStudent.getId());
+                    for (Absent absent : selectedAbsent){
+                        absent.destroy();
+                    }
+                    selectedStudent.destroy();
                     JOptionPane.showMessageDialog(StudentsPanel.this, "Student deleted successfully.");
                 } else {
                     JOptionPane.showMessageDialog(StudentsPanel.this, "Please select a student to delete.");

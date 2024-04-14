@@ -7,22 +7,15 @@ import models.Absent;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-/**
- * A panel for managing student attendance in a lesson.
- */
 public class StudentListPanel extends JPanel {
     private JList<String> allStudentsList;
     private JList<String> absentStudentsList;
     private Student[] allStudentsArray;
     private Lesson currentLesson;
 
-    /**
-     * Constructs the StudentListPanel.
-     *
-     * @param lesson The lesson for which student attendance is being managed.
-     */
     public StudentListPanel(Lesson lesson) {
         this.currentLesson = lesson;
 
@@ -145,9 +138,16 @@ public class StudentListPanel extends JPanel {
                 Student student = Student.findByName(studentName);
 
                 if (student != null) {
-                    Absent absent = new Absent(student.getId(), lesson.getId());
-                    absent.save();
-                    JOptionPane.showMessageDialog(this, "Absent students saved successfully!");
+                    boolean isAbsent = Arrays.stream(absences).anyMatch(absent -> absent.getStudent().equals(student));
+                    if (!isAbsent) {
+                        // If the student is not already marked as absent, create a new absence record
+                        Absent absent = new Absent(student.getId(), lesson.getId());
+                        absent.save();
+                        JOptionPane.showMessageDialog(this, "Absent students saved successfully!");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(this, "Absent students saved successfully! No changes made.");
+                    }
                 }
                 else{
                     JOptionPane.showMessageDialog(this, "Absent students saved successfully! No absent students.");

@@ -1,26 +1,21 @@
 package GUI;
 
-import models.Student;
+import GUI.MainFrame;
+import GUI.MenuPanel;
 import models.Absent;
 import models.Lesson;
+import models.Student;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 
-/**
- * A panel for displaying student absences.
- */
 public class StudentAbsencePanel extends JPanel {
     private Student student;
-    Absent[] allAbsences;
-    Absent[] subjectAbsences;
+    private Absent[] allAbsences;
 
-    /**
-     * Constructs the StudentAbsencePanel.
-     *
-     * @param student The student whose absences are being displayed.
-     */
     public StudentAbsencePanel(Student student) {
         this.student = student;
 
@@ -35,54 +30,6 @@ public class StudentAbsencePanel extends JPanel {
 
         // Retrieve absences for the student
         allAbsences = student.getAbsents();
-
-        //
-        for (Absent absence : allAbsences) {
-            int subjectId = absence.getLesson().getSubject().getId();
-            subjectAbsences = student.getAbsentsForSubject(subjectId);
-
-        }
-
-        // Create a map to store the count of absences per subject
-        HashMap<String, Integer> subjectCounts = new HashMap<>();
-
-        // Count the absences for each subject
-        for (Absent absence : subjectAbsences) {
-            String subjectName = absence.getLesson().getSubject().getName();
-            subjectCounts.put(subjectName, subjectCounts.getOrDefault(subjectName, 0) + 1);
-        }
-
-        JPanel studentAbsencePanel = new JPanel();
-        studentAbsencePanel.setLayout(new GridLayout(2, 1));
-
-        // Create a panel for subjects
-        JPanel subjectPanel = new JPanel(new GridBagLayout());
-        subjectPanel.setBorder(BorderFactory.createTitledBorder("Subjects"));
-        GridBagConstraints subjectGbc = new GridBagConstraints();
-        subjectGbc.gridx = 0;
-        subjectGbc.gridy = 0;
-        subjectGbc.anchor = GridBagConstraints.WEST;
-        for (String subjectName : subjectCounts.keySet()) {
-            JLabel subjectLabel = new JLabel(subjectName);
-            JLabel countLabel = new JLabel(subjectCounts.get(subjectName).toString());
-            subjectPanel.add(subjectLabel, subjectGbc);
-            subjectGbc.gridx++;
-            JLabel space = new JLabel(".......................");
-            subjectPanel.add(space);
-            subjectGbc.gridx++;
-            subjectGbc.anchor = GridBagConstraints.EAST;
-            JLabel countTextLabel = new JLabel("Count: ");
-            subjectPanel.add(countTextLabel, subjectGbc);
-            subjectGbc.gridx++;
-            subjectPanel.add(countLabel, subjectGbc);
-
-            subjectGbc.gridx = 0;
-            subjectGbc.gridy++;
-        }
-
-        // Add subjects panel to a scroll pane
-        JScrollPane subjectScrollPane = new JScrollPane(subjectPanel);
-        studentAbsencePanel.add(subjectScrollPane);
 
         // Create a panel for lessons
         JPanel lessonPanel = new JPanel(new GridBagLayout());
@@ -100,9 +47,23 @@ public class StudentAbsencePanel extends JPanel {
 
         // Add lessons panel to a scroll pane
         JScrollPane lessonScrollPane = new JScrollPane(lessonPanel);
-        studentAbsencePanel.add(lessonScrollPane);
+        add(lessonScrollPane, BorderLayout.CENTER);
 
-        // Add the parent panel to the main panel
-        add(studentAbsencePanel, BorderLayout.CENTER);
+        // Create a "Return to Menu" button
+        JButton returnButton = new JButton("Return to Menu");
+
+        // Add action listener to the return button
+        returnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Return to the menu panel
+                MenuPanel menuPanel = new MenuPanel();
+                MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(StudentAbsencePanel.this);
+                mainFrame.setCurrentPanel(menuPanel);
+            }
+        });
+
+        // Add the return button to the panel
+        add(returnButton, BorderLayout.SOUTH);
     }
 }
