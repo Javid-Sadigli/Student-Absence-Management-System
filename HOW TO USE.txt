@@ -1,0 +1,15 @@
+
+Hello. 
+
+This application is a simple student absence management system. 
+
+1) By clicking the Students button, you can see the list of students. You can add new student, delete a student, or you can see the absence of a student by double clicking on the student. 
+
+2) By clicking Groups button, you can see the list of groups. You can add new group, delete a group. 
+3) By clicking Subjects button, you can see the list of subjects. You can add new subject, delete a subject. 
+
+4) By clicking Check Presence button, you can see the list of the Lessons. You can add new Lesson, delete a Lesson, or you can 
+   check attendance by double clicking on the Lesson. When you double click, you can see the list of students on the left. When you 
+   mark a student as absent, it will jumped to the right. So, you can manage the attendance of students in this panel.
+
+Thanks for your attention. 
