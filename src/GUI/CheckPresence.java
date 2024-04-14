@@ -1,6 +1,7 @@
 package GUI;
 
 import models.Lesson;
+import models.Subject;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -16,50 +17,58 @@ public class CheckPresence extends JPanel {
     public CheckPresence(List<Lesson> lessons) {
         this.panelTitle = "Attendance";
 
-        //create a JList to display the lesson names
-        DefaultListModel<String> listModel = new DefaultListModel<>();
-
+        // Create a JList to display the lesson names
+        DefaultListModel<String> lessonListModel = new DefaultListModel<>();
         if (lessons != null && !lessons.isEmpty()) {
             for (Lesson lesson : lessons) {
-                //lesson details
-                listModel.addElement("Subject: " + lesson.getSubject());
-//                listModel.addElement("Date: " + lesson.getDate());
-//                listModel.addElement("Room: " + lesson.getRoom());
-//                listModel.addElement("ID: " + lesson.getId());
-                //separator
-                listModel.addElement("----------------------");
+                lessonListModel.addElement(lesson.toString());
             }
         } else {
-            //handle case when no lessons are available
-            listModel.addElement("No lessons available");
+            // Handle case when no lessons are available
+            lessonListModel.addElement("No lessons available");
         }
 
-        //create the JList
-        lessonList = new JList<>(listModel);
+        // Create the JList
+        lessonList = new JList<>(lessonListModel);
         lessonList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         lessonList.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16)); // Set font size
         lessonList.setFixedCellHeight(50); // Set cell height
         lessonList.setBorder(new EmptyBorder(10, 10, 10, 10)); // Add padding
+
+        // Set the model
+        lessonList.setModel(lessonListModel);
 
         //CONTROLLERS
         lessonList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    String selectedLesson = lessonList.getSelectedValue(); //get selected lesson
-                    System.out.println("Selected Lesson: " + selectedLesson);
+                    // Get the selected lesson
+                    int selectedIndex = lessonList.getSelectedIndex();
+                    if (selectedIndex >= 0 && selectedIndex < lessons.size()) {
+                        Lesson selectedLesson = lessons.get(selectedIndex);
+
+                        // Pass the selected lesson to the StudentListPanel
+                        StudentListPanel studentListPanel = new StudentListPanel(selectedLesson);
+                        MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(CheckPresence.this);
+                        mainFrame.setCurrentPanel(studentListPanel);
+                        // Now you can use studentListPanel as needed
+                    } else {
+                        // Handle invalid index
+                        System.out.println("Invalid lesson index selected.");
+                    }
                 }
             }
         });
 
-        //wrap the list in a JScrollPane
+        // Wrap the list in a JScrollPane
         JScrollPane scrollPane = new JScrollPane(lessonList);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        //set layout to BorderLayout
+        // Set layout to BorderLayout
         setLayout(new BorderLayout());
 
-        //add the scroll pane to the center of the panel
+        // Add the scroll pane to the center of the panel
         add(scrollPane, BorderLayout.CENTER);
     }
 

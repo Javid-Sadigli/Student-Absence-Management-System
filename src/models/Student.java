@@ -7,6 +7,7 @@ import interfaces.Model;
 
 import java.lang.ArrayIndexOutOfBoundsException;
 
+import toolkit.DatabasePath;
 import toolkit.FileDatabase;
 
 public class Student implements Model
@@ -16,12 +17,13 @@ public class Student implements Model
     private int groupId; 
 
     private static String modelName = "Student";
-    private static String databasePath = "./database/"+ Student.modelName; 
+    private static String databasePath = DatabasePath.getDatabasePath(modelName);
 
     public Student(String fullName, int groupId)
     {
         this.fullName = fullName;
         this.groupId = groupId;
+        this.id = 0;
     }
 
     /* Getters */
@@ -72,16 +74,6 @@ public class Student implements Model
         }
     }
 
-    public void save()
-    {
-        this.setId();        
-        FileDatabase<Student> db = new FileDatabase<Student>(Student.databasePath);
-        db.load();
-        db.add(this);
-        db.save();
-    }
-
-
     /* Static methods */
     public static Student[] getAll()
     {
@@ -119,5 +111,41 @@ public class Student implements Model
             }
         }
         return null; 
+    }
+    
+
+    @Override
+    public boolean equals(Object obj) 
+    {
+        Student student = (Student) obj;
+        if (student.getId() == this.getId()) return true; 
+        return false;
+    }
+
+    @Override
+    public void save()
+    {
+        FileDatabase<Student> db = new FileDatabase<Student>(Student.databasePath);
+        db.load();
+        if(this.id == 0)
+        {
+            this.setId();        
+            db.add(this);
+            db.save();
+        }
+        else 
+        {
+            db.replace(db.indexOf(this), this);
+            db.save();
+        }
+    }
+
+    @Override 
+    public void destroy()
+    {
+        FileDatabase<Student> db = new FileDatabase<Student>(Student.databasePath);
+        db.load();
+        db.remove(this);
+        db.save();
     }
 }

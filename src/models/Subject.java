@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import interfaces.Model;
+import toolkit.DatabasePath;
 import toolkit.FileDatabase;
 
 public class Subject implements Model
@@ -13,12 +14,13 @@ public class Subject implements Model
     private int groupId;
 
     private static String modelName = "Subject";
-    private static String databasePath = "./database/"+ Subject.modelName; 
+    private static String databasePath = DatabasePath.getDatabasePath(modelName);
 
     public Subject(String name, int groupId)
     {
         this.name = name;
         this.groupId = groupId;
+        this.id = 0;
     }
 
     /* Getters */
@@ -60,16 +62,6 @@ public class Subject implements Model
         this.groupId = groupId;
     }
 
-
-    public void save()
-    {
-        this.setId();
-        FileDatabase<Subject> db = new FileDatabase<Subject>(Subject.databasePath);
-        db.load();
-        db.add(this);
-        db.save();
-    }
-
     /* Static methods */
     public static Subject[] getAll()
     {
@@ -107,5 +99,40 @@ public class Subject implements Model
             }
         }
         return filteredSubjectList.toArray(new Subject[filteredSubjectList.size()]);
+    }
+
+    @Override 
+    public void save()
+    {
+        FileDatabase<Subject> db = new FileDatabase<Subject>(Subject.databasePath);
+        db.load();
+        if(this.id == 0)
+        {
+            this.setId();        
+            db.add(this);
+            db.save();
+        }
+        else 
+        {
+            db.replace(db.indexOf(this), this);
+            db.save();
+        }
+    }
+
+    @Override
+    public void destroy()
+    {
+        FileDatabase<Subject> db = new FileDatabase<Subject>(Subject.databasePath);
+        db.load();
+        db.remove(this);
+        db.save();
+    }
+
+    @Override 
+    public boolean equals(Object obj) 
+    {
+        Subject subject = (Subject) obj;
+        if (subject.getId() == this.getId()) return true; 
+        return false;
     }
 }

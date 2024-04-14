@@ -3,7 +3,7 @@ package models;
 import java.util.Collection;
 
 import interfaces.Model;
-
+import toolkit.DatabasePath;
 import toolkit.FileDatabase;
 
 public class Group implements Model
@@ -12,11 +12,12 @@ public class Group implements Model
     private int id;
 
     private static String modelName = "Group";
-    private static String databasePath = "src/database/"+ Group.modelName;
+    private static String databasePath = DatabasePath.getDatabasePath(modelName);
 
     public Group(String name)
     {
         this.name = name;
+        this.id = 0;
     }
 
     /* Getters */
@@ -51,15 +52,6 @@ public class Group implements Model
     }
 
 
-    public void save()
-    {
-        this.setId();
-        FileDatabase<Group> db = new FileDatabase<Group>(Group.databasePath);
-        db.load();
-        db.add(this);
-        db.save();
-    }
-
     public Student[] getStudents()
     {
         return Student.filterByGroup(this.id); 
@@ -87,6 +79,42 @@ public class Group implements Model
             }
         }
         return null; 
+    }
+
+
+    @Override
+    public void save()
+    {
+        FileDatabase<Group> db = new FileDatabase<Group>(Group.databasePath);
+        db.load();
+        if(this.id == 0)
+        {
+            this.setId();        
+            db.add(this);
+            db.save();
+        }
+        else 
+        {
+            db.replace(db.indexOf(this), this);
+            db.save();
+        }
+    }
+
+    @Override
+    public void destroy()
+    {
+        FileDatabase<Group> db = new FileDatabase<Group>(Group.databasePath);
+        db.load();
+        db.remove(this);
+        db.save();
+    }
+
+    @Override
+    public boolean equals(Object obj) 
+    {
+        Group group = (Group) obj;
+        if (group.getId() == this.getId()) return true; 
+        return false;
     }
     
 

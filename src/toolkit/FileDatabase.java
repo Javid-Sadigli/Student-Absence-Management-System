@@ -116,4 +116,24 @@ public class FileDatabase<T extends Serializable> implements Serializable {
                 + e.getMessage());
         }
     }
+
+    /**
+     * Returns the index of the specified object in the collection.
+     * @param obj The object to find the index of.
+     * @return The index of the object in the collection, or -1 if not found.
+     */
+    public int indexOf(T obj) {
+        return new ArrayList<>(this.collection).indexOf(obj);
+    }
+
+    /**
+     * Replaces the object at the specified index in the collection with a new object.
+     * @param index The index of the object to replace.
+     * @param newObj The new object to replace the old one with.
+     */
+    public void replace(int index, T newObj) {
+        ArrayList<T> tempList = new ArrayList<>(this.collection);
+        tempList.set(index, newObj);
+        this.collection = tempList;
+    }
 }

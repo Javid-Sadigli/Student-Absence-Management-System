@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import interfaces.Model;
+import toolkit.DatabasePath;
 import toolkit.FileDatabase;
 
 public class Lesson implements Model
@@ -15,13 +16,14 @@ public class Lesson implements Model
     private int room; 
 
     private static String modelName = "Lesson";
-    private static String databasePath = "./database/"+ Lesson.modelName; 
+    private static String databasePath = DatabasePath.getDatabasePath(modelName);
 
     public Lesson(Date date, int subjectId, int room)
     {
         this.room = room;
         this.date = date;
         this.subjectId = subjectId;
+        this.id = 0;
     }
 
     /* Getters */
@@ -33,10 +35,17 @@ public class Lesson implements Model
     {
         return this.date;
     }
-    public Subject getSubject()
-    {
-        return Subject.findById(this.subjectId);
+
+    //modified by FF
+    public Subject getSubject() {
+        Subject subject = Subject.findById(this.subjectId);
+        if (subject == null) {
+            System.out.println("Subject with ID " + this.subjectId + " not found.");
+            // You may choose to throw an exception here or handle it based on your application logic
+        }
+        return subject;
     }
+
     public int getRoom()
     {
         return this.room;
@@ -69,16 +78,6 @@ public class Lesson implements Model
                 this.id = 1; 
             }
         }
-    }
-
-    
-    public void save()
-    {
-        this.setId();
-        FileDatabase<Lesson> db = new FileDatabase<Lesson>(Lesson.databasePath);
-        db.load();
-        db.add(this);
-        db.save();
     }
 
     /* Static methods */
@@ -135,6 +134,48 @@ public class Lesson implements Model
             }
         }
         return filteredLessonList.toArray(new Lesson[filteredLessonList.size()]);
+    }
+
+    @Override
+    public void save()
+    {
+        FileDatabase<Lesson> db = new FileDatabase<Lesson>(Lesson.databasePath);
+        db.load();
+        if(this.id == 0)
+        {
+            this.setId();        
+            db.add(this);
+            db.save();
+        }
+        else 
+        {
+            db.replace(db.indexOf(this), this);
+            db.save();
+        }
+    }
+
+    @Override 
+    public void destroy()
+    {
+        FileDatabase<Lesson> db = new FileDatabase<Lesson>(Lesson.databasePath);
+        db.load();
+        db.remove(this);
+        db.save();
+    }
+
+    @Override
+    public boolean equals(Object obj) 
+    {
+        Lesson lesson = (Lesson) obj;
+        if (lesson.getId() == this.getId()) return true; 
+        return false;
+    }
+
+    //FF
+    @Override
+    public String toString() {
+        String subjectName = (this.getSubject() != null) ? this.getSubject().getName() : "Unknown";
+        return "Date: " + this.date.toString() + ", Subject: " + subjectName + ", Room: " + this.room;
     }
 
 }

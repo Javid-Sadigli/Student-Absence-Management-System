@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import interfaces.Model;
+import toolkit.DatabasePath;
 import toolkit.FileDatabase;
 
 public class Absent implements Model
@@ -13,7 +14,14 @@ public class Absent implements Model
     private int lessonId; 
 
     private static String modelName = "Absent";
-    private static String databasePath = "./database/"+ Absent.modelName; 
+    private static String databasePath = DatabasePath.getDatabasePath(modelName);
+
+    public Absent(int studentId, int lessonId)
+    {
+        this.studentId = studentId;
+        this.lessonId = lessonId;
+        this.id = 0;
+    }
 
 
     /* Getters */
@@ -53,15 +61,6 @@ public class Absent implements Model
     public void setLessonId(int lessonId)
     {
         this.lessonId = lessonId;
-    }
-
-    public void save()
-    {
-        this.setId();
-        FileDatabase<Absent> db = new FileDatabase<Absent>(Absent.databasePath);
-        db.load();
-        db.add(this);
-        db.save();
     }
 
     /* Static methods */
@@ -136,6 +135,42 @@ public class Absent implements Model
             }
         }
         return filteredAbsentList.toArray(new Absent[filteredAbsentList.size()]);
+    }
+
+
+    @Override
+    public void save()
+    {
+        FileDatabase<Absent> db = new FileDatabase<Absent>(Absent.databasePath);
+        db.load();
+        if(this.id == 0)
+        {
+            this.setId();        
+            db.add(this);
+            db.save();
+        }
+        else 
+        {
+            db.replace(db.indexOf(this), this);
+            db.save();
+        }
+    }
+
+    @Override
+    public void destroy()
+    {
+        FileDatabase<Absent> db = new FileDatabase<Absent>(Absent.databasePath);
+        db.load();
+        db.remove(this);
+        db.save();
+    }
+
+    @Override
+    public boolean equals(Object obj) 
+    {
+        Absent absent = (Absent) obj;
+        if (absent.getId() == this.getId()) return true; 
+        return false;
     }
 
 
