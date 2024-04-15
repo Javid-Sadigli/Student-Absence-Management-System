@@ -7,11 +7,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Panel for adding a new group.
+ */
 public class AddGroupPanel extends JPanel {
 
     private String groupName;
     private String groupLeader;
 
+    /**
+     * Constructs the AddGroupPanel.
+     */
     public AddGroupPanel() {
 
         this.setLayout(new GridBagLayout());
@@ -59,10 +65,20 @@ public class AddGroupPanel extends JPanel {
         });
     }
 
+    /**
+     * Gets the name of the group.
+     *
+     * @return The name of the group.
+     */
     public String getGroupName() {
         return groupName;
     }
 
+    /**
+     * Retrieves the leader of the group.
+     *
+     * @return The leader of the group.
+     */   
     public String getGroupLeader() {
         return groupLeader;
     }

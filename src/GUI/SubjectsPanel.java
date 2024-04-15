@@ -9,9 +9,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Panel for managing the list of subjects.
+ */
 public class SubjectsPanel extends JPanel {
     private JList<String> subjectsList;
 
+    /**
+     * Constructs a new SubjectsPanel.
+     */
     public SubjectsPanel() {
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();

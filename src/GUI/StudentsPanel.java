@@ -10,9 +10,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * Panel for managing the list of students.
+ */
 public class StudentsPanel extends JPanel {
     private JList<String> studentsList;
 
+    /**
+     * Constructs a new StudentsPanel.
+     */
     public StudentsPanel() {
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();

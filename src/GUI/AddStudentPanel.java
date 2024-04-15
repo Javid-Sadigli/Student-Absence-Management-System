@@ -10,10 +10,16 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Panel for adding a new student with specified details.
+ */
 public class AddStudentPanel extends JPanel {
     private String panelTitle;
     private JComboBox<String> groupComboBox;
 
+    /**
+     * Constructs a new AddStudentPanel with default settings.
+     */
     public AddStudentPanel() {
         // Grid bag layout for panel
         this.setLayout(new GridBagLayout());
@@ -108,6 +114,11 @@ public class AddStudentPanel extends JPanel {
         });
     }
 
+    /**
+     * Retrieves a list of group names.
+     *
+     * @return List of group names.
+     */
     private List<String> getGroupNames() {
         // Retrieve and return a list of group names from the database
         List<String> groupNames = new ArrayList<>();
@@ -118,6 +129,12 @@ public class AddStudentPanel extends JPanel {
         return groupNames;
     }
 
+    /**
+     * Retrieves the ID of a group by its name.
+     *
+     * @param groupName Name of the group.
+     * @return ID of the group.
+     */
     private int getGroupIdByName(String groupName) {
         // Retrieve and return the group ID based on the group name
         Group[] groups = Group.getAll();
@@ -129,6 +146,11 @@ public class AddStudentPanel extends JPanel {
         return -1; // Return -1 if group name is not found
     }
 
+    /**
+     * Gets the panel title.
+     *
+     * @return The panel title.
+     */
     public String getPanelTitle() {
         return panelTitle;
     }

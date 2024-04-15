@@ -10,12 +10,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Panel for managing the list of students and their absence status for a specific lesson.
+ */
 public class StudentListPanel extends JPanel {
     private JList<String> allStudentsList;
     private JList<String> absentStudentsList;
     private Student[] allStudentsArray;
     private Lesson currentLesson;
 
+    /**
+     * Constructs a new StudentListPanel for the specified lesson.
+     *
+     * @param lesson The lesson for which the student list is managed.
+     */
     public StudentListPanel(Lesson lesson) {
         this.currentLesson = lesson;
 

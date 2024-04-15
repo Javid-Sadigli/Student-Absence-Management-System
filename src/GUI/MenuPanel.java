@@ -8,9 +8,15 @@ import java.util.Arrays;
 import java.util.List;
 import models.Lesson;
 
+/**
+ * Panel for displaying the main menu of the Attendance Management System.
+ */
 public class MenuPanel extends JPanel {
     private String panelTitle;
 
+    /**
+     * Constructs a new MenuPanel.
+     */
     public MenuPanel() {
         // GridBagLayout for MenuPanel
         this.setLayout(new GridBagLayout());
@@ -91,6 +97,11 @@ public class MenuPanel extends JPanel {
         });
     }
 
+    /**
+     * Gets the panel title.
+     *
+     * @return The panel title.
+     */
     public String getPanelTitle() {
         return panelTitle;
     }

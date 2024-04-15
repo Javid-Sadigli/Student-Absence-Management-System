@@ -12,10 +12,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
+/**
+ * Panel for displaying absences of a specific student.
+ */
 public class StudentAbsencePanel extends JPanel {
     private Student student;
     private Absent[] allAbsences;
 
+    /**
+     * Constructs a new StudentAbsencePanel for the specified student.
+     *
+     * @param student The student whose absences are to be displayed.
+     */
     public StudentAbsencePanel(Student student) {
         this.student = student;
 

@@ -9,9 +9,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * Panel for managing groups.
+ */
 public class GroupsPanel extends JPanel {
     private JList<String> groupsList;
 
+    /**
+     * Constructs a new GroupsPanel.
+     */
     public GroupsPanel() {
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();

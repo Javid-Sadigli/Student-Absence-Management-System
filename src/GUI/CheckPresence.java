@@ -11,10 +11,18 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+/**
+ * Panel for checking presence of students in lessons.
+ */
 public class CheckPresence extends JPanel {
     private String panelTitle;
     private JList<String> lessonList;
 
+    /**
+     * Constructs a new CheckPresence panel.
+     *
+     * @param lessons List of lessons to display.
+     */
     public CheckPresence(List<Lesson> lessons) {
         this.panelTitle = "Attendance";
 
@@ -120,6 +128,11 @@ public class CheckPresence extends JPanel {
         });
     }
 
+    /**
+     * Gets the panel title.
+     *
+     * @return The panel title.
+     */
     public String getPanelTitle() {
         return panelTitle;
     }
