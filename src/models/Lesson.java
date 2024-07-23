@@ -108,7 +108,9 @@ public class Lesson implements Model
         Lesson[] lessons = Lesson.getAll();
         try
         {
-            this.id = lessons[lessons.length - 1].getId() + 1;
+            int length = lessons.length;
+            Lesson last = lessons[length - 1];
+            this.id = last.getId() + 1;
         }
         catch (ArrayIndexOutOfBoundsException e)
         {

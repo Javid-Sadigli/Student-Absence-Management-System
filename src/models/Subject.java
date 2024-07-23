@@ -8,7 +8,8 @@ import toolkit.DatabasePath;
 import toolkit.FileDatabase;
 
 /**
- * A Subject model for representing the subjects
+ * A Subject model for 
+ * representing the subjects
  */
 public class Subject implements Model
 {
