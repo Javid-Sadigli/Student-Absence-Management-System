@@ -2,7 +2,7 @@
 The Student Absence Management System is a desktop application built using Java Swing. It helps educational institutions track and manage student attendance and absences effectively.
 
 ## Features
-- **Student Records Management**: Add, edit, and delete student records.
+- **Student Records Management**: Add and delete student records.
 - **Attendance Tracking**: Mark students as present or absent.
 - **User-Friendly Interface**: Simple and intuitive UI designed with Java Swing.
 
